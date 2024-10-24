@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:panel_kit/controller.dart';
 import 'package:panel_kit/dialog.dart';
 
 import 'package:panel_kit/menu.dart';
 import 'package:panel_kit/menu_item.dart';
 import 'package:panel_kit/notification.dart';
-import 'package:panel_kit/page_headers.dart';
+import 'package:panel_kit/page_header.dart';
 import 'package:panel_kit/panel_kit.dart';
 import 'package:panel_kit/page.dart';
 import 'package:panel_kit/buttons.dart';
 
 void main() {
   runApp(MainApp());
+}
+
+class Dupa extends PanelKitPage {
+  Dupa({super.key})
+      : super(
+          title: "aaaa",
+          builder: (context, controller) {
+            return Container();
+          },
+        );
 }
 
 class MainApp extends StatelessWidget {
@@ -26,65 +35,171 @@ class MainApp extends StatelessWidget {
       theme: ThemeData.dark(),
       home: PanelKit(
         controller: controller,
-        title: "PanelKit - Example",
+        panelTitle: "PanelKit - Example",
         menu: PanelKitMenu(
           menuItems: [
             PanelKitMenuItem(
-              title: "Notifications",
+              title: "Navigation Example",
               icon: Icons.home,
               page: PanelKitPage(
-                title: "Notifications Test",
-                builder: (context) => Center(
-                  child: Row(
-                    children: [
-                      Column(
-                        children: [
-                          PanelKitButton(type: PanelKitButtonType.secondary, onPressed: () => controller.showNotification(type: PanelKitNotificationType.success, text: "Success!"), label: "Show info notification"),
-                          const SizedBox(height: 10),
-                          PanelKitButton(type: PanelKitButtonType.secondary, onPressed: () => controller.showNotification(type: PanelKitNotificationType.error, text: "Error!"), label: "Show error notification"),
-                          const SizedBox(height: 10),
-                          PanelKitButton(onPressed: () => controller.showNotification(type: PanelKitNotificationType.warning, text: "Warning!"), label: "Show warning notification"),
-                          const SizedBox(height: 10),
-                          PanelKitButton(onPressed: () => controller.showNotification(type: PanelKitNotificationType.info, text: "Info!"), label: "Show info notification"),
-                        ],
+                title: "Navigation Example",
+                builder: (context, controller) => Center(
+                  child: PanelKitButton(
+                    type: PanelKitButtonType.secondary,
+                    onPressed: () => controller.navigateTo(
+                      PanelKitPage(
+                        title: "Next(1) Page Example",
+                        builder: (context, controller) => Center(
+                          child: PanelKitButton(
+                            type: PanelKitButtonType.secondary,
+                            onPressed: () => controller.navigateTo(
+                              PanelKitPage(
+                                title: "Next(2) Page Example",
+                                builder: (context, controller) => Center(
+                                  child: PanelKitButton(
+                                    type: PanelKitButtonType.secondary,
+                                    onPressed: () => controller.navigateTo(
+                                      PanelKitPage(
+                                        title: "Next(3) Page Example",
+                                        builder: (context, controller) => const Center(
+                                          child: Text(
+                                            "Next(3) empty page.\nOn desktop use breadcumbs to navigate to previous page.\nOn mobile use back button to navigate to previous page.",
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    label: "Navigate to next page (3)",
+                                  ),
+                                ),
+                              ),
+                            ),
+                            label: "Navigate to next page (2)",
+                          ),
+                        ),
                       ),
-                      Column(
-                        children: [
-                          PanelKitButton(type: PanelKitButtonType.secondary, onPressed: () => controller.showDialg(PanelKitDialogType.confirmation), label: "Show confirmation dialog"),
-                          const SizedBox(height: 10),
-                          PanelKitButton(onPressed: () => controller.showDialg(PanelKitDialogType.custom), label: "Show confirmation custom dialog"),
-                        ],
-                      ),
-                    ],
+                    ),
+                    label: "Navigate to next page (1)",
                   ),
                 ),
               ),
             ),
             PanelKitMenuItem(
-              title: "Button Title without icon",
+              title: "Dupa page",
+              icon: Icons.pool_sharp,
+              page: Dupa(),
+            ),
+            PanelKitMenuItem(
+              title: "Empty page",
               page: PanelKitPage(
-                title: "Second PanelKitPage Title",
-                builder: (context) => Container(),
+                title: "Empty page title",
+                builder: (context, controller) => const Center(
+                  child: Text("Empty"),
+                ),
               ),
             ),
             PanelKitMenuItem(
-              title: "Button Title 3",
+              title: "Elements",
               icon: Icons.tab,
               page: PanelKitPage(
-                title: "PanelKitPage with Tabs",
+                title: "Notifications, Dialogs and Buttons example",
                 tabs: [
-                  PageTab(title: "Option 1", child: Container()),
-                  PageTab(title: "Option 2", child: Container()),
+                  PanelKitPageTab(
+                    title: "Buttons",
+                    builder: (context, controller) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PanelKitButton(
+                          type: PanelKitButtonType.primary,
+                          onPressed: () {},
+                          label: "Primary",
+                        ),
+                        const SizedBox(height: 10),
+                        PanelKitButton(
+                          type: PanelKitButtonType.secondary,
+                          onPressed: () {},
+                          label: "Secondary",
+                        ),
+                        const SizedBox(height: 10),
+                        PanelKitButton(
+                          onPressed: null,
+                          label: "Disabled",
+                        ),
+                      ],
+                    ),
+                  ),
+                  PanelKitPageTab(
+                    title: "Notifications",
+                    builder: (context, controller) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PanelKitButton(
+                          type: PanelKitButtonType.secondary,
+                          onPressed: () => controller.showNotification(type: PanelKitNotificationType.success, text: "Success!"),
+                          label: "Show info notification",
+                        ),
+                        const SizedBox(height: 10),
+                        PanelKitButton(
+                          type: PanelKitButtonType.secondary,
+                          onPressed: () => controller.showNotification(type: PanelKitNotificationType.error, text: "Error!"),
+                          label: "Show error notification",
+                        ),
+                        const SizedBox(height: 10),
+                        PanelKitButton(
+                          type: PanelKitButtonType.secondary,
+                          onPressed: () => controller.showNotification(type: PanelKitNotificationType.warning, text: "Warning!"),
+                          label: "Show warning notification",
+                        ),
+                        const SizedBox(height: 10),
+                        PanelKitButton(
+                          type: PanelKitButtonType.secondary,
+                          onPressed: () => controller.showNotification(type: PanelKitNotificationType.info, text: "Info!"),
+                          label: "Show info notification",
+                        ),
+                      ],
+                    ),
+                  ),
+                  PanelKitPageTab(
+                    title: "Dialogs",
+                    builder: (context, controller) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PanelKitButton(
+                          type: PanelKitButtonType.secondary,
+                          onPressed: () => controller.showDialg(PanelKitDialogType.confirmation),
+                          label: "Show confirmation dialog",
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        PanelKitButton(
+                          type: PanelKitButtonType.secondary,
+                          onPressed: () => controller.showDialg(PanelKitDialogType.custom),
+                          label: "Show confirmation custom dialog",
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
             PanelKitMenuWidget.spacer(),
+            PanelKitMenuWidget.divider(),
             PanelKitMenuItem(
-              title: "Settings Button",
+              title: "Settings",
               icon: Icons.settings,
               page: PanelKitPage(
                 title: "Settings Example",
-                builder: (context) => Container(),
+                builder: (context, controller) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PanelKitButton(
+                      type: PanelKitButtonType.secondary,
+                      // onPressed: () => controller.setMainPage,
+                      label: "Show confirmation dialog",
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

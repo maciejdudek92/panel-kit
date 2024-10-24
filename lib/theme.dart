@@ -1,68 +1,157 @@
 import 'dart:ui';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
-class PanelKitTheme {
-  Color contentBackground;
-  Color headerBackground;
-  Color menuBackground;
-  Color primaryColor;
-  Color borderColor;
-  TextStyle headerTextStyle;
-  TextStyle menuItemTextStyle;
-  TextStyle activeMenuItemTextStyle;
-  TextStyle disabledMenuItemTextStyle;
+class PanelKitDialogTheme {
+  final Divider divider;
+  final Color backgroundColor;
+  final Color borderColor;
+  final TextStyle headerTextStyle;
+  final TextStyle descriptionTextStyle;
 
-  Divider divider;
-  Color menuItemBackground;
-  Color disabledMenuItemBackground;
-  Color activedMenuItemBackground;
+  const PanelKitDialogTheme({
+    this.backgroundColor = const Color(0xFF131314),
+    this.borderColor = const Color(0xFF424242),
+    this.divider = const Divider(
+      height: 1,
+      color: Color(0xFF424242),
+    ),
+    this.headerTextStyle = const TextStyle(
+      fontFamily: "Poppins",
+      fontSize: 26,
+      fontWeight: FontWeight.w500,
+    ),
+    this.descriptionTextStyle = const TextStyle(
+      fontFamily: "Poppins",
+      fontSize: 14,
+    ),
+  });
+}
+
+class PanelKitNotificationTheme {
+  final Color backgroundColor;
+  final Color borderColor;
+
+  const PanelKitNotificationTheme({
+    this.backgroundColor = const Color(0xFF131314),
+    this.borderColor = const Color(0xFF424242),
+  });
+}
+
+class PanelKitMenuTheme {
+  final Color backgroundColor;
+  final Color menuItemBackgroundColor;
+  final Color disabledMenuItemBackgroundColor;
+  final Color activedMenuItemBackgroundColor;
+  final TextStyle menuItemTextStyle;
+  final TextStyle activeMenuItemTextStyle;
+  final TextStyle disabledMenuItemTextStyle;
+
+  const PanelKitMenuTheme({
+    this.backgroundColor = const Color(0xFF131314),
+    this.menuItemBackgroundColor = const Color(0xff00000000), // transparent
+    this.disabledMenuItemBackgroundColor = const Color(0xFF757575),
+    this.activedMenuItemBackgroundColor = const Color(0xFF2d2d31),
+    this.menuItemTextStyle = const TextStyle(
+      fontFamily: "Poppins",
+      fontSize: 14,
+      color: Colors.grey,
+    ),
+    this.activeMenuItemTextStyle = const TextStyle(
+      fontFamily: "Poppins",
+      fontSize: 14,
+      color: Colors.white,
+    ),
+    this.disabledMenuItemTextStyle = const TextStyle(
+      fontFamily: "Poppins",
+      fontSize: 14,
+      color: Color(0xFF424242),
+    ),
+  });
+}
+
+class PanelKitPageTheme {
+  final Color backgroundColor;
+  final Color headerBackgroundColor;
+  final TextStyle headerTextStyle;
+  const PanelKitPageTheme({
+    this.backgroundColor = const Color(0xFF131314),
+    this.headerBackgroundColor = const Color(0xFF1B1B18),
+    this.headerTextStyle = const TextStyle(
+      fontFamily: "Poppins",
+      fontSize: 26,
+      fontWeight: FontWeight.w500,
+    ),
+  });
+}
+
+class PanelKitButtonsTheme {
+  final TextStyle textStyle;
+  final Color primaryBackgroundColor;
+  final Color secondaryBackgroundColor;
+  final TextStyle disabledButtonTextStyle;
+  final Color disabledButtonColor;
+
+  const PanelKitButtonsTheme({
+    this.primaryBackgroundColor = const Color(0xFFD32F2F),
+    this.secondaryBackgroundColor = const Color(0xFF131314),
+    this.disabledButtonColor = const Color(0xFF484842),
+    this.textStyle = const TextStyle(
+      fontFamily: "Poppins",
+      fontSize: 14,
+      color: Colors.white,
+    ),
+    this.disabledButtonTextStyle = const TextStyle(
+      fontFamily: "Poppins",
+      fontSize: 14,
+      color: Colors.grey,
+    ),
+  });
+}
+
+class PanelKitTheme {
+  PanelKitPageTheme page;
+  PanelKitMenuTheme menu;
+  PanelKitButtonsTheme button;
+  PanelKitDialogTheme dialog;
+  PanelKitNotificationTheme notification;
+
+  Color primaryAccentColor;
+  Color backgroundColor;
+  Color borderColor;
 
   PanelKitTheme({
-    Color? contentBackground,
-    Color? menuBackground,
-    Color? primaryColor,
+    Color? primaryAccentColor,
+    Color? backgroundColor,
     Color? borderColor,
-    Color? headerBackground,
-    TextStyle? headerTextStyle,
-    Color? menuItemBackground,
-    Color? disabledMenuItemBackground,
-    Color? activedMenuItemBackground,
-    TextStyle? menuItemTextStyle,
-    TextStyle? activeMenuItemTextStyle,
-    TextStyle? disabledMenuItemTextStyle,
-    Divider? divider,
-  })  : contentBackground = contentBackground ?? Color(0xFF18181B),
-        headerBackground = headerBackground ?? Color(0xFF2d2d31),
-        menuBackground = menuBackground ?? Color(0xFF18181B),
-        primaryColor = primaryColor ?? Colors.redAccent,
-        borderColor = borderColor ?? Colors.grey.shade800,
-        headerTextStyle = headerTextStyle ??
-            GoogleFonts.poppins(
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
+    PanelKitPageTheme? page,
+    PanelKitMenuTheme? menu,
+    PanelKitButtonsTheme? button,
+    PanelKitDialogTheme? dialog,
+    PanelKitNotificationTheme? notification,
+  })  : primaryAccentColor = primaryAccentColor ?? const Color(0xFFD32F2F),
+        backgroundColor = backgroundColor ?? const Color(0xFF131314),
+        borderColor = borderColor ?? const Color(0xFF424242),
+        page = page ??
+            PanelKitPageTheme(
+              backgroundColor: backgroundColor ?? const Color(0xFF131314),
             ),
-        divider = divider ??
-            Divider(
-              height: 1,
-              color: primaryColor,
+        menu = menu ??
+            PanelKitMenuTheme(
+              backgroundColor: backgroundColor ?? const Color(0xFF131314),
             ),
-        menuItemBackground = menuItemBackground ?? Colors.transparent,
-        disabledMenuItemBackground = disabledMenuItemBackground ?? Colors.grey.shade600,
-        activedMenuItemBackground = activedMenuItemBackground ?? Color(0xFF2d2d31),
-        menuItemTextStyle = menuItemTextStyle ??
-            GoogleFonts.poppins(
-              fontSize: 14,
-              color: Colors.grey,
+        button = button ??
+            PanelKitButtonsTheme(
+              primaryBackgroundColor: primaryAccentColor ?? const Color(0xFFD32F2F),
+              secondaryBackgroundColor: backgroundColor ?? const Color(0xFF131314),
             ),
-        activeMenuItemTextStyle = activeMenuItemTextStyle ??
-            GoogleFonts.poppins(
-              fontSize: 14,
-              color: Colors.white,
+        dialog = dialog ??
+            PanelKitDialogTheme(
+              backgroundColor: backgroundColor ?? const Color(0xFF131314),
+              borderColor: borderColor ?? const Color(0xFF424242),
             ),
-        disabledMenuItemTextStyle = disabledMenuItemTextStyle ??
-            GoogleFonts.poppins(
-              fontSize: 14,
-              color: Colors.grey.shade800,
+        notification = notification ??
+            PanelKitNotificationTheme(
+              backgroundColor: backgroundColor ?? const Color(0xFF131314),
+              borderColor: borderColor ?? const Color(0xFF424242),
             );
 }

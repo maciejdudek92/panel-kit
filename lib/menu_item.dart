@@ -1,34 +1,71 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:hugeicons/hugeicons.dart';
 import 'package:panel_kit/controller.dart';
 import 'package:panel_kit/page.dart';
 import 'package:provider/provider.dart';
 
-class PanelKitMenuItem extends StatelessWidget {
-  final String? title;
+abstract class PanelKitMenuWidget extends StatelessWidget {
+  const PanelKitMenuWidget({super.key});
+  static _PanelKitMenuSpacer spacer() => const _PanelKitMenuSpacer();
+  static _PanelKitMenuDivider divider() => const _PanelKitMenuDivider();
+}
+
+class _PanelKitMenuSpacer extends PanelKitMenuWidget {
+  const _PanelKitMenuSpacer();
+  @override
+  Widget build(BuildContext context) {
+    return const Spacer();
+  }
+}
+
+class _PanelKitMenuDivider extends PanelKitMenuWidget {
+  const _PanelKitMenuDivider();
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 15),
+      child: Divider(
+        height: 1,
+      ),
+    );
+  }
+}
+
+class PanelKitMenuItem extends PanelKitMenuWidget {
+  final String title;
   final IconData? icon;
   final PanelKitPage page;
-  bool isDisabled;
+  final bool isDisabled;
+  final EdgeInsets padding;
 
-  PanelKitMenuItem({this.icon, required this.title, super.key, required this.page, this.isDisabled = false});
+  const PanelKitMenuItem({
+    this.icon,
+    required this.title,
+    super.key,
+    required this.page,
+    this.isDisabled = false,
+    this.padding = const EdgeInsets.symmetric(vertical: 2.5),
+  });
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.read<PanelKitController>();
-    bool isSelected = context.watch<PanelKitController>().selectedPage == page;
+    final controller = context.watch<PanelKitController>();
+
+    bool isSelected = controller.mainPage == page;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2.5),
+      padding: padding,
       child: TextButton(
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(
-            isSelected ? controller.theme.activedMenuItemBackground : controller.theme.menuItemBackground,
+            isSelected ? controller.theme.menu.activedMenuItemBackgroundColor : controller.theme.menu.menuItemBackgroundColor,
           ),
           splashFactory: NoSplash.splashFactory,
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               // side: BorderSide(width: 1),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(7),
             ),
           ),
           minimumSize: WidgetStateProperty.all(const Size(double.maxFinite, 50)),
@@ -36,33 +73,38 @@ class PanelKitMenuItem extends StatelessWidget {
         onPressed: isDisabled
             ? null
             : () {
-                context.read<PanelKitController>().setPage(page);
+                controller.setMainPage(page);
                 Scaffold.of(context).closeDrawer();
               },
-        child: Row(
-          children: [
-            if (icon != null)
-              Icon(
-                icon!,
-                color: isDisabled
-                    ? controller.theme.disabledMenuItemBackground
-                    : isSelected
-                        ? controller.theme.activeMenuItemTextStyle.color
-                        : controller.theme.menuItemTextStyle.color,
-                size: 24.0,
+        child: SizedBox(
+          width: double.maxFinite,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (icon != null)
+                Icon(
+                  icon!,
+                  color: isDisabled
+                      ? controller.theme.menu.disabledMenuItemBackgroundColor
+                      : isSelected
+                          ? controller.theme.menu.activeMenuItemTextStyle.color
+                          : controller.theme.menu.menuItemTextStyle.color,
+                  size: 18.0,
+                ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: Text(
+                  title,
+                  style: isDisabled
+                      ? controller.theme.menu.disabledMenuItemTextStyle
+                      : isSelected
+                          ? controller.theme.menu.activeMenuItemTextStyle
+                          : controller.theme.menu.menuItemTextStyle,
+                  overflow: TextOverflow.clip,
+                ),
               ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text(
-                title ?? page.title,
-                style: isDisabled
-                    ? controller.theme.disabledMenuItemTextStyle
-                    : isSelected
-                        ? controller.theme.activeMenuItemTextStyle
-                        : controller.theme.menuItemTextStyle,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

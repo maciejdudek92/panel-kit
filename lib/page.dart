@@ -1,26 +1,30 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:panel_kit/controller.dart';
-import 'package:panel_kit/headers.dart';
-import 'package:provider/provider.dart';
+import 'package:panel_kit/page_header.dart';
+import 'package:uuid/uuid.dart';
 
 abstract class DefaultPanelKitPage extends StatelessWidget {
+  final String routeId;
   final String title;
-  const DefaultPanelKitPage({super.key, required this.title});
+  DefaultPanelKitPage({super.key, required this.title}) : routeId = const Uuid().v4();
 }
 
 class PanelKitPage extends DefaultPanelKitPage {
   final Widget? header;
   late Widget _header;
-  final List<PageTab>? tabs;
-  final Widget Function(BuildContext context)? builder;
-
+  final List<PanelKitPageTab>? tabs;
+  final Widget Function(BuildContext context, PanelKitController controller)? builder;
+  final controller = GetIt.I<PanelKitController>();
   bool showLoadingIndicator;
 
   PanelKitPage({
+    super.key,
     required super.title,
     this.builder,
     this.tabs,
-    super.key,
     this.showLoadingIndicator = false,
     this.header,
   }) {
@@ -43,10 +47,16 @@ class PanelKitPage extends DefaultPanelKitPage {
     ),
   );
 
+  Widget render({required Widget child}) {
+    if (builder != null) {
+      return child;
+    }
+    return DefaultTabController(length: tabs != null ? tabs!.length : 0, child: child);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final controller = context.read<PanelKitController>();
-    double size = controller.getScreenSize(context).width;
+    double size = MediaQuery.of(context).size.width;
 
     if (showLoadingIndicator) {
       return _loadingWidget;
@@ -64,26 +74,25 @@ class PanelKitPage extends DefaultPanelKitPage {
 
     Widget child;
     if (builder != null) {
-      child = builder!(context);
+      child = builder!(context, controller);
     } else {
-      child = TabBarView(children: tabs!.map((tab) => tab.child).toList());
+      child = TabBarView(children: tabs!.map((tab) => tab.builder(context, controller)).toList());
     }
 
-    return DefaultTabController(
-      length: tabs != null ? tabs!.length : 0,
+    return render(
       child: Builder(
         builder: (context) {
           switch (size) {
-            case <= 768:
+            case <= 1024:
               return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _header,
                   Expanded(
                     flex: 9,
                     child: Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.fromLTRB(50, 50, 50, 5),
                       child: child,
                     ),
                   ),
@@ -91,14 +100,14 @@ class PanelKitPage extends DefaultPanelKitPage {
               );
             default:
               return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _header,
                   Expanded(
                     flex: 5,
                     child: Padding(
-                      padding: const EdgeInsets.all(35.0),
+                      padding: const EdgeInsets.fromLTRB(50, 50, 50, 5),
                       child: child,
                     ),
                   ),

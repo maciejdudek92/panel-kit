@@ -1,63 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:panel_kit/controller.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
+
+enum AppBarPageTitle {
+  fromButton,
+  fromPage;
+}
 
 class PanelKitAppBar extends StatelessWidget implements PreferredSizeWidget {
-  String title;
-  PanelKitAppBar({required this.title});
+  final AppBarPageTitle titleDisplaySettings;
+  const PanelKitAppBar({super.key, this.titleDisplaySettings = AppBarPageTitle.fromButton});
+
   @override
   Widget build(BuildContext context) {
-    final controller = context.read<PanelKitController>();
-    double size = controller.getScreenSize(context).width;
+    final controller = context.watch<PanelKitController>();
+    double size = MediaQuery.of(context).size.width;
+
+    IconButton drawerButton = IconButton(
+      icon: const Icon(Icons.menu),
+      color: controller.theme.primaryAccentColor,
+      onPressed: () {
+        Scaffold.of(context).openDrawer();
+      },
+    );
+
+    IconButton backButton = IconButton(
+      icon: const Icon(Icons.chevron_left_rounded),
+      color: controller.theme.primaryAccentColor,
+      onPressed: () => controller.navigateBack(),
+    );
+
+    List<Widget> appBarContent = [
+      const SizedBox(width: 15),
+      Text(
+        controller.panelTitle,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
+    ];
 
     switch (size) {
       case <= 1024:
         return Container(
+          alignment: Alignment.center,
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(width: 1, color: controller.theme.borderColor),
             ),
           ),
           child: AppBar(
+            leadingWidth: double.maxFinite,
             backgroundColor: Colors.transparent,
-            leading: Builder(
-              builder: (context) {
-                return Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.menu),
-                      color: controller.theme.primaryColor,
-                      onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                    ),
-                    Row(
-                      children: [
-                        // _dasboardLogo,
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
-                          child: Text(
-                            title,
-                            // style: TextStyle(fontFamily: 'Bangers'),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text("/"),
-                        ),
-                        Text(context.watch<PanelKitController>().selectedPage.title),
-                      ],
-                    ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(left: 15.0),
-                    //   child: Text(
-                    //     controller.title,
-                    //     style: TextStyle(fontFamily: 'Bangers'),
-                    //   ),
-                    // ),
-                  ],
-                );
-              },
+            leading: SizedBox(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  controller.isMainPageActive ? drawerButton : backButton,
+                  ...appBarContent,
+                ],
+              ),
             ),
           ),
         );
@@ -69,34 +75,27 @@ class PanelKitAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           child: AppBar(
-            toolbarHeight: 150,
+            leadingWidth: double.maxFinite,
             backgroundColor: Colors.transparent,
-            // decoration: BoxDecoration(border: Border(top: BorderSide(width: 1, color: Colors.grey), left: BorderSide(width: 1, color: Colors.grey))),
-
-            actions: [
-              TextButton(
-                onPressed: () {},
-                child: Text(context.watch<PanelKitController>().selectedPage.title),
-              ),
-            ],
-            leading: SizedBox(
-              child: Row(
-                children: [
-                  // _dasboardLogo,
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: Text(
-                      title,
-                      style: TextStyle(fontFamily: 'Bangers'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Text("/"),
-                  ),
-                  Text(context.watch<PanelKitController>().selectedPage.title),
-                ],
-              ),
+            leading: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ...appBarContent,
+                const SizedBox(width: 15),
+                BreadCrumb(
+                  items: controller.breadCumbsData.map((element) {
+                    return BreadCrumbItem(
+                      content: Text(
+                        element["title"],
+                        style: element["style"],
+                      ),
+                      onTap: element["action"],
+                    );
+                  }).toList(),
+                  divider: const Text("  /  "),
+                )
+              ],
             ),
           ),
         );
@@ -104,5 +103,5 @@ class PanelKitAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(60);
 }
