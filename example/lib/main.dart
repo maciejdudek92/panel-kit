@@ -14,16 +14,6 @@ void main() {
   runApp(MainApp());
 }
 
-class Dupa extends PanelKitPage {
-  Dupa({super.key})
-      : super(
-          title: "aaaa",
-          builder: (context, controller) {
-            return Container();
-          },
-        );
-}
-
 class MainApp extends StatelessWidget {
   MainApp({super.key});
 
@@ -83,11 +73,6 @@ class MainApp extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            PanelKitMenuItem(
-              title: "Dupa page",
-              icon: Icons.pool_sharp,
-              page: Dupa(),
             ),
             PanelKitMenuItem(
               title: "Empty page",

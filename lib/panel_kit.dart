@@ -34,6 +34,7 @@ class PanelKit extends StatefulWidget {
 
 class _PanelKitState extends State<PanelKit> {
   final controller = GetIt.I<PanelKitController>();
+  late final Widget navigatorBuilder;
 
   @override
   void initState() {
@@ -46,7 +47,7 @@ class _PanelKitState extends State<PanelKit> {
       startPage: (widget.menu.menuItems.first as PanelKitMenuItem).page,
       pageTitle: (widget.menu.menuItems.first as PanelKitMenuItem).title,
     );
-
+    navigatorBuilder = controller.navigatorBuilder(context);
     super.initState();
   }
 
@@ -73,13 +74,13 @@ class _PanelKitState extends State<PanelKit> {
               builder: (context) {
                 switch (MediaQuery.of(context).size.width) {
                   case <= 1024:
-                    return controller.navigatorBuilder(context);
+                    return navigatorBuilder;
                   default:
                     return Row(
                       children: [
                         widget.menu,
                         Expanded(
-                          child: controller.navigatorBuilder(context),
+                          child: navigatorBuilder,
                         )
                       ],
                     );

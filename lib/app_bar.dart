@@ -60,6 +60,7 @@ class PanelKitAppBar extends StatelessWidget implements PreferredSizeWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  const SizedBox(width: 15),
                   controller.isMainPageActive ? drawerButton : backButton,
                   ...appBarContent,
                 ],
@@ -81,8 +82,9 @@ class PanelKitAppBar extends StatelessWidget implements PreferredSizeWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                ...appBarContent,
                 const SizedBox(width: 15),
+                ...appBarContent,
+                const SizedBox(width: 30),
                 BreadCrumb(
                   items: controller.breadCumbsData.map((element) {
                     return BreadCrumbItem(

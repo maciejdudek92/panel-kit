@@ -93,6 +93,7 @@ class PanelKitNavigator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Navigator(
       restorationScopeId: restorationScopeId,
+      pages: [],
       initialRoute: "/",
       onGenerateRoute: _onGenerateRoute,
     );
