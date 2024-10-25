@@ -36,10 +36,7 @@ class PanelKitAppBar extends StatelessWidget implements PreferredSizeWidget {
       Text(
         controller.panelTitle,
         textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
       ),
     ];
 
@@ -61,7 +58,7 @@ class PanelKitAppBar extends StatelessWidget implements PreferredSizeWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(width: 15),
-                  controller.isMainPageActive ? drawerButton : backButton,
+                  controller.isFirstPageActive ? drawerButton : backButton,
                   ...appBarContent,
                 ],
               ),

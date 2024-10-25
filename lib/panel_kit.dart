@@ -64,28 +64,31 @@ class _PanelKitState extends State<PanelKit> {
       builder: (context, child) {
         double size = MediaQuery.of(context).size.width;
 
-        return Scaffold(
-          backgroundColor: controller.theme.backgroundColor,
-          appBar: widget.appBar,
-          drawer: size <= 1024 ? widget.menu : null,
-          body: RestorationScope(
-            restorationId: controller.navigationRestorationScopeId,
-            child: Builder(
-              builder: (context) {
-                switch (MediaQuery.of(context).size.width) {
-                  case <= 1024:
-                    return navigatorBuilder;
-                  default:
-                    return Row(
-                      children: [
-                        widget.menu,
-                        Expanded(
-                          child: navigatorBuilder,
-                        )
-                      ],
-                    );
-                }
-              },
+        return Theme(
+          data: ThemeData.dark(),
+          child: Scaffold(
+            backgroundColor: controller.theme.backgroundColor,
+            appBar: widget.appBar,
+            drawer: size <= 1024 ? widget.menu : null,
+            body: RestorationScope(
+              restorationId: controller.navigationRestorationScopeId,
+              child: Builder(
+                builder: (context) {
+                  switch (MediaQuery.of(context).size.width) {
+                    case <= 1024:
+                      return navigatorBuilder;
+                    default:
+                      return Row(
+                        children: [
+                          widget.menu,
+                          Expanded(
+                            child: navigatorBuilder,
+                          )
+                        ],
+                      );
+                  }
+                },
+              ),
             ),
           ),
         );

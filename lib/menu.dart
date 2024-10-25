@@ -3,16 +3,15 @@ import 'package:get_it/get_it.dart';
 import 'package:panel_kit/controller.dart';
 import 'package:panel_kit/menu_item.dart';
 
-class PanelKitMenu extends StatefulWidget {
+class PanelKitMenu extends StatelessWidget {
   final List<PanelKitMenuWidget> menuItems;
+  final double width;
+  PanelKitMenu({
+    super.key,
+    required this.menuItems,
+    this.width = 200,
+  });
 
-  const PanelKitMenu({super.key, required this.menuItems});
-
-  @override
-  State<PanelKitMenu> createState() => _PanelKitMenuState();
-}
-
-class _PanelKitMenuState extends State<PanelKitMenu> {
   final controller = GetIt.I<PanelKitController>();
 
   @override
@@ -27,7 +26,7 @@ class _PanelKitMenuState extends State<PanelKitMenu> {
       child: Drawer(
         backgroundColor: Colors.transparent,
         shape: const ContinuousRectangleBorder(side: BorderSide(width: 1)),
-        width: 200, //width,
+        width: width, //width,
         // elevation: 2,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -35,7 +34,7 @@ class _PanelKitMenuState extends State<PanelKitMenu> {
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Column(
               children: [
-                ...widget.menuItems,
+                ...menuItems,
               ],
             ),
           ),

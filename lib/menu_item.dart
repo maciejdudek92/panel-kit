@@ -21,13 +21,13 @@ class _PanelKitMenuSpacer extends PanelKitMenuWidget {
 
 class _PanelKitMenuDivider extends PanelKitMenuWidget {
   const _PanelKitMenuDivider();
+
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 15),
-      child: Divider(
-        height: 1,
-      ),
+    final controller = context.watch<PanelKitController>();
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      child: Divider(height: 1, color: controller.theme.borderColor),
     );
   }
 }
@@ -52,7 +52,7 @@ class PanelKitMenuItem extends PanelKitMenuWidget {
   Widget build(BuildContext context) {
     final controller = context.watch<PanelKitController>();
 
-    bool isSelected = controller.mainPage == page;
+    bool isSelected = controller.isPageActive(page);
 
     return Padding(
       padding: padding,
@@ -73,7 +73,7 @@ class PanelKitMenuItem extends PanelKitMenuWidget {
         onPressed: isDisabled
             ? null
             : () {
-                controller.setMainPage(page);
+                controller.setNewRoute(page);
                 Scaffold.of(context).closeDrawer();
               },
         child: SizedBox(

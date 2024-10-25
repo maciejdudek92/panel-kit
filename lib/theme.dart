@@ -29,11 +29,25 @@ class PanelKitDialogTheme {
 
 class PanelKitNotificationTheme {
   final Color backgroundColor;
+  final Color closeIconColor;
   final Color borderColor;
+  final TextStyle titleTextStyle;
+  final TextStyle descriptionTextStyle;
 
   const PanelKitNotificationTheme({
     this.backgroundColor = const Color(0xFF131314),
     this.borderColor = const Color(0xFF424242),
+    this.closeIconColor = Colors.white,
+    this.titleTextStyle = const TextStyle(
+      fontFamily: "Poppins",
+      fontSize: 14,
+      color: Colors.white,
+    ),
+    this.descriptionTextStyle = const TextStyle(
+      fontFamily: "Poppins",
+      fontSize: 14,
+      color: Colors.white,
+    ),
   });
 }
 
@@ -76,11 +90,7 @@ class PanelKitPageTheme {
   const PanelKitPageTheme({
     this.backgroundColor = const Color(0xFF131314),
     this.headerBackgroundColor = const Color(0xFF1B1B18),
-    this.headerTextStyle = const TextStyle(
-      fontFamily: "Poppins",
-      fontSize: 26,
-      fontWeight: FontWeight.w500,
-    ),
+    this.headerTextStyle = const TextStyle(fontFamily: "Poppins", fontSize: 26, fontWeight: FontWeight.w500, color: Colors.white),
   });
 }
 

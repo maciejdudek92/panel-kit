@@ -1,99 +1,106 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:panel_kit/controller.dart';
-import 'package:panel_kit/page.dart';
 
-enum PanelKitNavigatorRoutes {
-  mainPage,
-  subpage,
-  previous;
-}
+import 'package:panel_kit/page.dart';
 
 // ignore: must_be_immutable
 class PanelKitNavigator extends StatelessWidget {
   final String restorationScopeId;
-  late ValueNotifier<PanelKitPage> _mainPage;
-  final List<PanelKitPage> subpages = [];
-
-  ValueNotifier<PanelKitPage> get mainPage => _mainPage;
+  final List<PanelKitPage> _pages = [];
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   PanelKitNavigator({super.key, required PanelKitPage startPage, required this.restorationScopeId}) {
-    _mainPage = ValueNotifier(startPage);
+    _pages.add(startPage);
   }
-  final controller = GetIt.I<PanelKitController>();
-  BuildContext? _context;
 
   Route<Widget> _onGenerateRoute(RouteSettings settings) {
-    PanelKitPage page;
-
-    if (subpages.isEmpty) {
-      page = _mainPage.value;
-    } else {
-      page = subpages.last;
-    }
     return MaterialPageRoute(
       builder: (context) {
-        if (_context != null) {
-          if (!_context!.mounted) {
-            _context = context;
-          }
-        } else {
-          _context = context;
-        }
-
-        return page;
+        return _pages.last;
       },
       settings: settings,
     );
   }
 
-  setMainPage(PanelKitPage mainPage) {
-    _mainPage.value = mainPage;
-    if (subpages.isNotEmpty) {
-      subpages.clear();
-      Navigator.popUntil(_context!, (Route<dynamic> predicate) => predicate.isFirst);
+  setNewRoute(PanelKitPage page) {
+    if (_pages.length > 1) {
+      Navigator.popUntil(navigatorKey.currentContext!, ModalRoute.withName(_pages.first.routeId));
     }
+    _pages.clear();
+    _pages.add(page);
+
     Navigator.push(
-      _context!,
+      navigatorKey.currentContext!,
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => mainPage,
+        pageBuilder: (context, animation, secondaryAnimation) => _pages.last,
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return child;
         },
       ),
     );
+    // }
   }
 
-  navigateTo({required PanelKitNavigatorRoutes type, PanelKitPage? subpage, dynamic data}) {
-    switch (type) {
-      case PanelKitNavigatorRoutes.subpage:
-        assert(subpage != null, "SubPage is required!");
-        if (!subpages.contains(subpage)) {
-          subpages.add(subpage!);
-          Navigator.pushNamed(_context!, subpages.last.routeId);
-        } else {
-          subpages.removeRange(subpages.indexOf(subpage!) + 1, subpages.length);
-          Navigator.popUntil(_context!, ModalRoute.withName(subpages.last.routeId));
-        }
-      case PanelKitNavigatorRoutes.previous:
-        if (subpage != null) {
-          subpages.removeRange(subpages.indexOf(subpage) + 1, subpages.length);
-          Navigator.popUntil(_context!, ModalRoute.withName(subpages.last.routeId));
-        } else {
-          subpages.removeLast();
-          Navigator.pop(_context!, data);
-        }
-      default:
-        subpages.clear();
-        Navigator.popUntil(_context!, ModalRoute.withName("/"));
+  bool get isFirstPageActive => _pages.length == 1;
+  bool isPageActive(PanelKitPage page) {
+    return _pages.last.routeId == page.routeId;
+  }
+
+  List<PanelKitPage> get pages => _pages;
+
+  navigateBack({int? index, dynamic data}) {
+    if (index != null) {
+      _pages.removeRange(index + 1, _pages.length);
+      Navigator.popUntil(navigatorKey.currentContext!, ModalRoute.withName(_pages.last.routeId));
+      if (_pages.length == 1) setNewRoute(_pages.last);
+    } else {
+      _pages.removeLast();
+      // Navigator.pop(navigatorKey.currentContext!, data);
+
+      // Navigator.popUntil(navigatorKey.currentContext!, ModalRoute.withName(_pages.last.routeId));
+      Navigator.pushReplacement(
+        navigatorKey.currentContext!,
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => _pages.last,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(-1.0, 0.0); // Slide from left to right
+            const end = Offset.zero;
+            const curve = Curves.easeInOut;
+
+            final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            final offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(
+              position: offsetAnimation,
+              child: child,
+            );
+
+            // return child;
+          },
+        ),
+      );
+    }
+  }
+
+  navigateTo({required PanelKitPage page, dynamic data}) {
+    if (_pages.contains(page)) {
+      int index = _pages.indexOf(page) + 1;
+      _pages.removeRange(index, _pages.length);
+      if (index == 0) {
+        Navigator.popUntil(navigatorKey.currentContext!, ModalRoute.withName("/"));
+      } else {
+        Navigator.popUntil(navigatorKey.currentContext!, ModalRoute.withName(_pages.last.routeId));
+      }
+    } else {
+      _pages.add(page);
+      Navigator.pushNamed(navigatorKey.currentContext!, _pages.last.routeId);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
+      key: navigatorKey,
       restorationScopeId: restorationScopeId,
-      pages: [],
       initialRoute: "/",
       onGenerateRoute: _onGenerateRoute,
     );

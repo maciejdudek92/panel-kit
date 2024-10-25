@@ -6,12 +6,7 @@ import 'package:panel_kit/notification.dart';
 import 'package:panel_kit/page.dart';
 import 'package:panel_kit/theme.dart';
 import 'package:uuid/uuid.dart';
-
-class ActiveMainPage {
-  String title;
-  PanelKitPage mainPage;
-  ActiveMainPage({required this.title, required this.mainPage});
-}
+import 'package:collection/collection.dart';
 
 class PanelKitController with ChangeNotifier {
   PanelKitController() {
@@ -30,7 +25,7 @@ class PanelKitController with ChangeNotifier {
   late PanelKitDialog _dialog;
   PanelKitTheme get theme => _theme;
 
-  PanelKitPage get mainPage => _navigator.mainPage.value;
+  bool isPageActive(PanelKitPage page) => _navigator.isPageActive(page);
   Widget navigatorBuilder(context) => _navigator.build(context);
 
   init(
@@ -51,7 +46,7 @@ class PanelKitController with ChangeNotifier {
     notifyListeners();
   }
 
-  void showNotification({required PanelKitNotificationType type, required String text, String? description, autoCloseDuration = const Duration(seconds: 5)}) => _notification.show(type: type, text: text, description: description, autoCloseDuration: autoCloseDuration);
+  void showNotification({required PanelKitNotificationType type, required String title, String? description, autoCloseDuration = const Duration(seconds: 5)}) => _notification.show(type: type, title: title, description: description, autoCloseDuration: autoCloseDuration);
 
   void showDialg(PanelKitDialogType type) {
     if (type == PanelKitDialogType.custom) {
@@ -71,48 +66,43 @@ class PanelKitController with ChangeNotifier {
     }
   }
 
-  bool get isMainPageActive => _navigator.subpages.isEmpty;
+  bool get isFirstPageActive => _navigator.isFirstPageActive;
 
   List<Map<String, dynamic>> get breadCumbsData => [
-        {
-          "title": mainPage.title,
-          "style": isMainPageActive ? theme.button.disabledButtonTextStyle : null,
-          "action": isMainPageActive ? null : () => navigateBackToMainPage(),
-        },
-        ..._navigator.subpages.map(
-          (subpage) {
-            bool isLast = _isSubpageLast(subpage);
-            return {
-              "title": subpage.title,
-              "style": isLast ? theme.button.disabledButtonTextStyle : null,
-              "action": isLast ? null : () => navigateBack(subpage),
-            };
-          },
-        ),
+        ..._navigator.pages.mapIndexed((index, page) {
+          Function? action;
+
+          bool isLast = index + 1 == _navigator.pages.length;
+          bool isFirst = index == 0;
+
+          if (!isLast && !isFirst) {
+            action = () => navigateBack(index);
+          }
+
+          if (isFirst && !isLast) {
+            action = () => navigateBack(0);
+          }
+
+          return {
+            "title": page.title,
+            "style": isLast ? theme.button.disabledButtonTextStyle : null,
+            "action": action,
+          };
+        }),
       ];
 
-  bool _isSubpageLast(subpage) {
-    int index = _navigator.subpages.indexOf(subpage);
-    return _navigator.subpages.length - 1 == index;
-  }
-
-  void setMainPage(PanelKitPage mainPage) {
-    _navigator.setMainPage(mainPage);
+  void navigateTo(PanelKitPage page) {
+    _navigator.navigateTo(page: page);
     notifyListeners();
   }
 
-  void navigateTo(PanelKitPage subpage) {
-    _navigator.navigateTo(type: PanelKitNavigatorRoutes.subpage, subpage: subpage);
+  void setNewRoute(PanelKitPage page) {
+    _navigator.setNewRoute(page);
     notifyListeners();
   }
 
-  void navigateBack([PanelKitPage? subpage, dynamic data]) {
-    _navigator.navigateTo(type: PanelKitNavigatorRoutes.previous, subpage: subpage, data: data);
-    notifyListeners();
-  }
-
-  void navigateBackToMainPage() {
-    _navigator.navigateTo(type: PanelKitNavigatorRoutes.mainPage);
+  void navigateBack([int? index, dynamic data]) {
+    _navigator.navigateBack(index: index, data: data);
     notifyListeners();
   }
 }

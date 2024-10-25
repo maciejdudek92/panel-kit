@@ -9,14 +9,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
-  aura_box:
-    dependency: transitive
-    description:
-      name: aura_box
-      sha256: "944986570485c44b98e1e719895448eb3889e1cd5d6b8f7fd4a9b4349401f2d8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -155,14 +147,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  hugeicons:
-    dependency: transitive
-    description:
-      name: hugeicons
-      sha256: b5cf08183a75b7774ca6d601a2ef025ed26550e4fca9d956673ffda91e132411
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.7"
   iconsax_flutter:
     dependency: transitive
     description:
