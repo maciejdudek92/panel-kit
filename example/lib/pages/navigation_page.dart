@@ -24,7 +24,8 @@ class NavigationPage extends PanelKitPage {
                               onPressed: () => controller.navigateTo(
                                 PanelKitPage(
                                   title: "Next(3) Page Example",
-                                  builder: (context, controller) => const Center(
+                                  builder: (context, controller) =>
+                                      const Center(
                                     child: Text(
                                       "Next(3) empty page.\nOn desktop use breadcumbs to navigate to previous page.\nOn mobile use back button to navigate to previous page.",
                                       textAlign: TextAlign.center,

@@ -59,7 +59,9 @@ class PanelKitMenuItem extends PanelKitMenuWidget {
       child: TextButton(
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(
-            isSelected ? controller.theme.menu.activedMenuItemBackgroundColor : controller.theme.menu.menuItemBackgroundColor,
+            isSelected
+                ? controller.theme.menu.activedMenuItemBackgroundColor
+                : controller.theme.menu.menuItemBackgroundColor,
           ),
           splashFactory: NoSplash.splashFactory,
           shape: WidgetStateProperty.all(
@@ -68,7 +70,8 @@ class PanelKitMenuItem extends PanelKitMenuWidget {
               borderRadius: BorderRadius.circular(7),
             ),
           ),
-          minimumSize: WidgetStateProperty.all(const Size(double.maxFinite, 50)),
+          minimumSize:
+              WidgetStateProperty.all(const Size(double.maxFinite, 50)),
         ),
         onPressed: isDisabled
             ? null

@@ -10,7 +10,8 @@ enum AppBarPageTitle {
 
 class PanelKitAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AppBarPageTitle titleDisplaySettings;
-  const PanelKitAppBar({super.key, this.titleDisplaySettings = AppBarPageTitle.fromButton});
+  const PanelKitAppBar(
+      {super.key, this.titleDisplaySettings = AppBarPageTitle.fromButton});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,8 @@ class PanelKitAppBar extends StatelessWidget implements PreferredSizeWidget {
       Text(
         controller.panelTitle,
         textAlign: TextAlign.center,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
+        style: const TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
       ),
     ];
 

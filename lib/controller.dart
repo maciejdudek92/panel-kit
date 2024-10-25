@@ -46,7 +46,16 @@ class PanelKitController with ChangeNotifier {
     notifyListeners();
   }
 
-  void showNotification({required PanelKitNotificationType type, required String title, String? description, autoCloseDuration = const Duration(seconds: 5)}) => _notification.show(type: type, title: title, description: description, autoCloseDuration: autoCloseDuration);
+  void showNotification(
+          {required PanelKitNotificationType type,
+          required String title,
+          String? description,
+          autoCloseDuration = const Duration(seconds: 5)}) =>
+      _notification.show(
+          type: type,
+          title: title,
+          description: description,
+          autoCloseDuration: autoCloseDuration);
 
   void showDialg(PanelKitDialogType type) {
     if (type == PanelKitDialogType.custom) {

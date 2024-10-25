@@ -38,8 +38,11 @@ class _PanelKitState extends State<PanelKit> {
 
   @override
   void initState() {
-    if (widget.menu.menuItems.isEmpty) throw Exception("Menu items length must be greater than 0");
-    if (widget.menu.menuItems.first.runtimeType != PanelKitMenuItem) throw Exception("First item in menu items must have type of PanelKitMenuItem");
+    if (widget.menu.menuItems.isEmpty)
+      throw Exception("Menu items length must be greater than 0");
+    if (widget.menu.menuItems.first.runtimeType != PanelKitMenuItem)
+      throw Exception(
+          "First item in menu items must have type of PanelKitMenuItem");
     controller.init(
       context,
       panelTitle: widget.panelTitle,

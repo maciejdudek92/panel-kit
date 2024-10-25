@@ -9,14 +9,16 @@ import 'package:uuid/uuid.dart';
 abstract class DefaultPanelKitPage extends StatelessWidget {
   final String routeId;
   final String title;
-  DefaultPanelKitPage({super.key, required this.title}) : routeId = const Uuid().v4();
+  DefaultPanelKitPage({super.key, required this.title})
+      : routeId = const Uuid().v4();
 }
 
 class PanelKitPage extends DefaultPanelKitPage {
   final Widget? header;
   late Widget _header;
   final List<PanelKitPageTab>? tabs;
-  final Widget Function(BuildContext context, PanelKitController controller)? builder;
+  final Widget Function(BuildContext context, PanelKitController controller)?
+      builder;
   final controller = GetIt.I<PanelKitController>();
   bool showLoadingIndicator;
 
@@ -28,8 +30,10 @@ class PanelKitPage extends DefaultPanelKitPage {
     this.showLoadingIndicator = false,
     this.header,
   }) {
-    if (tabs == null && builder == null) throw Exception("Tabs or builder is required");
-    if (tabs != null && builder != null) throw Exception("Cant have both tabs and builder");
+    if (tabs == null && builder == null)
+      throw Exception("Tabs or builder is required");
+    if (tabs != null && builder != null)
+      throw Exception("Cant have both tabs and builder");
   }
 
   final Widget _loadingWidget = const Center(
@@ -51,7 +55,8 @@ class PanelKitPage extends DefaultPanelKitPage {
     if (builder != null) {
       return child;
     }
-    return DefaultTabController(length: tabs != null ? tabs!.length : 0, child: child);
+    return DefaultTabController(
+        length: tabs != null ? tabs!.length : 0, child: child);
   }
 
   @override
@@ -76,7 +81,9 @@ class PanelKitPage extends DefaultPanelKitPage {
     if (builder != null) {
       child = builder!(context, controller);
     } else {
-      child = TabBarView(children: tabs!.map((tab) => tab.builder(context, controller)).toList());
+      child = TabBarView(
+          children:
+              tabs!.map((tab) => tab.builder(context, controller)).toList());
     }
 
     return render(

@@ -41,25 +41,31 @@ class ElementsPage extends PanelKitPage {
                 children: [
                   PanelKitButton(
                     type: PanelKitButtonType.secondary,
-                    onPressed: () => controller.showNotification(type: PanelKitNotificationType.success, title: "Success!"),
+                    onPressed: () => controller.showNotification(
+                        type: PanelKitNotificationType.success,
+                        title: "Success!"),
                     label: "Show info notification",
                   ),
                   const SizedBox(height: 10),
                   PanelKitButton(
                     type: PanelKitButtonType.secondary,
-                    onPressed: () => controller.showNotification(type: PanelKitNotificationType.error, title: "Error!"),
+                    onPressed: () => controller.showNotification(
+                        type: PanelKitNotificationType.error, title: "Error!"),
                     label: "Show error notification",
                   ),
                   const SizedBox(height: 10),
                   PanelKitButton(
                     type: PanelKitButtonType.secondary,
-                    onPressed: () => controller.showNotification(type: PanelKitNotificationType.warning, title: "Warning!"),
+                    onPressed: () => controller.showNotification(
+                        type: PanelKitNotificationType.warning,
+                        title: "Warning!"),
                     label: "Show warning notification",
                   ),
                   const SizedBox(height: 10),
                   PanelKitButton(
                     type: PanelKitButtonType.secondary,
-                    onPressed: () => controller.showNotification(type: PanelKitNotificationType.info, title: "Info!"),
+                    onPressed: () => controller.showNotification(
+                        type: PanelKitNotificationType.info, title: "Info!"),
                     label: "Show info notification",
                   ),
                 ],
@@ -72,7 +78,8 @@ class ElementsPage extends PanelKitPage {
                 children: [
                   PanelKitButton(
                     type: PanelKitButtonType.secondary,
-                    onPressed: () => controller.showDialg(PanelKitDialogType.confirmation),
+                    onPressed: () =>
+                        controller.showDialg(PanelKitDialogType.confirmation),
                     label: "Show confirmation dialog",
                   ),
                   const SizedBox(
@@ -80,7 +87,8 @@ class ElementsPage extends PanelKitPage {
                   ),
                   PanelKitButton(
                     type: PanelKitButtonType.secondary,
-                    onPressed: () => controller.showDialg(PanelKitDialogType.custom),
+                    onPressed: () =>
+                        controller.showDialg(PanelKitDialogType.custom),
                     label: "Show confirmation custom dialog",
                   ),
                 ],

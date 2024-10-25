@@ -28,7 +28,8 @@ class PanelKitNotification {
 
     toastification.show(
       context: context,
-      type: ToastificationType.values.firstWhere((value) => value.name == type.name),
+      type: ToastificationType.values
+          .firstWhere((value) => value.name == type.name),
       alignment: alignment,
       title: Text(
         title,

@@ -49,12 +49,19 @@ class PanelKitButton extends StatelessWidget {
         onHover: onHover,
         onFocusChange: onFocusChange,
         style: ButtonStyle(
-          backgroundColor: isDisabled ? WidgetStateProperty.all(theme.button.disabledButtonColor) : WidgetStateProperty.all(type == PanelKitButtonType.primary ? theme.button.primaryBackgroundColor : theme.button.secondaryBackgroundColor),
+          backgroundColor: isDisabled
+              ? WidgetStateProperty.all(theme.button.disabledButtonColor)
+              : WidgetStateProperty.all(type == PanelKitButtonType.primary
+                  ? theme.button.primaryBackgroundColor
+                  : theme.button.secondaryBackgroundColor),
           splashFactory: NoSplash.splashFactory,
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7),
-              side: BorderSide(color: type == PanelKitButtonType.secondary ? theme.borderColor : Colors.transparent),
+              side: BorderSide(
+                  color: type == PanelKitButtonType.secondary
+                      ? theme.borderColor
+                      : Colors.transparent),
             ),
           ),
         ),
@@ -62,7 +69,13 @@ class PanelKitButton extends StatelessWidget {
         autofocus: autofocus,
         clipBehavior: clipBehavior,
         iconAlignment: iconAlignment,
-        child: Text(label, style: isDisabled ? GetIt.I<PanelKitController>().theme.button.disabledButtonTextStyle : GetIt.I<PanelKitController>().theme.button.textStyle),
+        child: Text(label,
+            style: isDisabled
+                ? GetIt.I<PanelKitController>()
+                    .theme
+                    .button
+                    .disabledButtonTextStyle
+                : GetIt.I<PanelKitController>().theme.button.textStyle),
       ),
     );
   }
