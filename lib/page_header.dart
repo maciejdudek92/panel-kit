@@ -8,8 +8,7 @@ class PanelKitPageHeader extends StatelessWidget {
   List<Widget> headerButtons;
   final String title;
   final controller = GetIt.I<PanelKitController>();
-  PanelKitPageHeader(
-      {super.key, required this.title, this.headerButtons = const []});
+  PanelKitPageHeader({super.key, required this.title, this.headerButtons = const []});
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +36,7 @@ class PanelKitPageHeader extends StatelessWidget {
 
 class PanelKitPageTab {
   String title;
-  final Widget Function(BuildContext context, PanelKitController controller)
-      builder;
+  final Widget Function(BuildContext context, PanelKitController controller) builder;
   PanelKitPageTab({required this.title, required this.builder});
 }
 
@@ -46,8 +44,7 @@ class PanelKitPageHeaderWithTabs extends StatelessWidget {
   final String title;
   final List<PanelKitPageTab> tabs;
   double? tabBarSize;
-  PanelKitPageHeaderWithTabs(
-      {super.key, required this.title, required this.tabs});
+  PanelKitPageHeaderWithTabs({super.key, required this.title, required this.tabs});
   final controller = GetIt.I<PanelKitController>();
 
   @override
@@ -92,8 +89,7 @@ class PanelKitPageHeaderWithTabs extends StatelessWidget {
                 indicatorColor: controller.theme.primaryAccentColor,
                 dividerColor: Colors.transparent,
                 labelColor: controller.theme.menu.activeMenuItemTextStyle.color,
-                unselectedLabelColor:
-                    controller.theme.menu.menuItemTextStyle.color,
+                unselectedLabelColor: controller.theme.menu.menuItemTextStyle.color,
                 indicatorSize: TabBarIndicatorSize.tab,
                 tabs: tabs.map((tab) => Text(tab.title)).toList(),
               ),

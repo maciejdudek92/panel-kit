@@ -28,29 +28,39 @@ class PanelKit extends StatefulWidget {
   })  : theme = theme ?? PanelKitTheme(),
         appBar = appBar ?? const PanelKitAppBar();
 
+  static _PanelKitState of(BuildContext context) {
+    final _PanelKitState? result = context.findAncestorStateOfType<_PanelKitState>();
+    if (result != null) {
+      return result;
+    }
+    throw FlutterError.fromParts(<DiagnosticsNode>[
+      ErrorSummary(
+        'PanelKit.of() called with a context that does not contain a PanelKit.',
+      ),
+      context.describeElement('The context used was'),
+    ]);
+  }
+
   @override
   State<PanelKit> createState() => _PanelKitState();
 }
 
 class _PanelKitState extends State<PanelKit> {
   final controller = GetIt.I<PanelKitController>();
-  late final Widget navigatorBuilder;
+  late final Widget _navigatorBuilder;
 
   @override
   void initState() {
-    if (widget.menu.menuItems.isEmpty)
-      throw Exception("Menu items length must be greater than 0");
-    if (widget.menu.menuItems.first.runtimeType != PanelKitMenuItem)
-      throw Exception(
-          "First item in menu items must have type of PanelKitMenuItem");
+    if (widget.menu.menuItems.isEmpty) throw Exception("Menu items length must be greater than 0");
+    if (widget.menu.menuItems.first.runtimeType != PanelKitMenuButton) throw Exception("First item in menu items must have type of PanelKitMenuButton");
     controller.init(
       context,
       panelTitle: widget.panelTitle,
       theme: widget.theme,
-      startPage: (widget.menu.menuItems.first as PanelKitMenuItem).page,
-      pageTitle: (widget.menu.menuItems.first as PanelKitMenuItem).title,
+      startPage: (widget.menu.menuItems.first as PanelKitMenuButton).page,
+      pageTitle: (widget.menu.menuItems.first as PanelKitMenuButton).title,
     );
-    navigatorBuilder = controller.navigatorBuilder(context);
+    _navigatorBuilder = controller.navigatorBuilder(context);
     super.initState();
   }
 
@@ -79,13 +89,13 @@ class _PanelKitState extends State<PanelKit> {
                 builder: (context) {
                   switch (MediaQuery.of(context).size.width) {
                     case <= 1024:
-                      return navigatorBuilder;
+                      return _navigatorBuilder;
                     default:
                       return Row(
                         children: [
                           widget.menu,
                           Expanded(
-                            child: navigatorBuilder,
+                            child: _navigatorBuilder,
                           )
                         ],
                       );

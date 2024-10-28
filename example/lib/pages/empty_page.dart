@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:panel_kit/page.dart';
 
-class EmptyPage extends PanelKitPage {
-  EmptyPage({super.key})
-      : super(
-          title: "Empty Page",
-          builder: (context, controller) => Container(),
-        );
+class EmptyPage extends StatelessWidget {
+  const EmptyPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Container();
+  }
 }

@@ -5,23 +5,16 @@ import 'package:panel_kit/controller.dart';
 import 'package:panel_kit/page.dart';
 import 'package:provider/provider.dart';
 
-abstract class PanelKitMenuWidget extends StatelessWidget {
-  const PanelKitMenuWidget({super.key});
-  static _PanelKitMenuSpacer spacer() => const _PanelKitMenuSpacer();
-  static _PanelKitMenuDivider divider() => const _PanelKitMenuDivider();
-}
+abstract class PanelKitMenuItem extends StatelessWidget {}
 
-class _PanelKitMenuSpacer extends PanelKitMenuWidget {
-  const _PanelKitMenuSpacer();
+class PanelKitMenuSpacer extends PanelKitMenuItem {
   @override
   Widget build(BuildContext context) {
     return const Spacer();
   }
 }
 
-class _PanelKitMenuDivider extends PanelKitMenuWidget {
-  const _PanelKitMenuDivider();
-
+class PanelKitMenuDivider extends PanelKitMenuItem {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<PanelKitController>();
@@ -32,17 +25,16 @@ class _PanelKitMenuDivider extends PanelKitMenuWidget {
   }
 }
 
-class PanelKitMenuItem extends PanelKitMenuWidget {
+class PanelKitMenuButton extends PanelKitMenuItem {
   final String title;
   final IconData? icon;
   final PanelKitPage page;
   final bool isDisabled;
   final EdgeInsets padding;
 
-  const PanelKitMenuItem({
+  PanelKitMenuButton({
     this.icon,
     required this.title,
-    super.key,
     required this.page,
     this.isDisabled = false,
     this.padding = const EdgeInsets.symmetric(vertical: 2.5),
@@ -59,9 +51,7 @@ class PanelKitMenuItem extends PanelKitMenuWidget {
       child: TextButton(
         style: ButtonStyle(
           backgroundColor: WidgetStateProperty.all(
-            isSelected
-                ? controller.theme.menu.activedMenuItemBackgroundColor
-                : controller.theme.menu.menuItemBackgroundColor,
+            isSelected ? controller.theme.menu.activedMenuItemBackgroundColor : controller.theme.menu.menuItemBackgroundColor,
           ),
           splashFactory: NoSplash.splashFactory,
           shape: WidgetStateProperty.all(
@@ -70,8 +60,7 @@ class PanelKitMenuItem extends PanelKitMenuWidget {
               borderRadius: BorderRadius.circular(7),
             ),
           ),
-          minimumSize:
-              WidgetStateProperty.all(const Size(double.maxFinite, 50)),
+          minimumSize: WidgetStateProperty.all(const Size(double.maxFinite, 50)),
         ),
         onPressed: isDisabled
             ? null

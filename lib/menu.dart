@@ -4,7 +4,7 @@ import 'package:panel_kit/controller.dart';
 import 'package:panel_kit/menu_item.dart';
 
 class PanelKitMenu extends StatelessWidget {
-  final List<PanelKitMenuWidget> menuItems;
+  final List<PanelKitMenuItem> menuItems;
   final double width;
   PanelKitMenu({
     super.key,
