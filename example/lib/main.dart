@@ -5,13 +5,13 @@ import 'package:example/pages/empty_page.dart';
 import 'package:example/pages/navigation_page.dart';
 import 'package:example/pages/settings_page.dart';
 import 'package:flutter/material.dart';
-import 'package:panel_kit/components/content/content_page.dart';
-import 'package:panel_kit/components/content/content_page_header.dart';
-import 'package:panel_kit/components/sidebar/sidebar_widget.dart';
-import 'package:panel_kit/controller.dart';
-import 'package:panel_kit/panel_kit.dart';
-import 'package:panel_kit/components/sidebar/sidebar.dart';
-import 'package:panel_kit/components/sidebar/sidebar_configuration.dart';
+import 'package:panely/components/content_page/content_page.dart';
+import 'package:panely/components/content_page/content_page_header.dart';
+import 'package:panely/components/sidebar/sidebar_widget.dart';
+import 'package:panely/controller.dart';
+import 'package:panely/components/sidebar/sidebar.dart';
+import 'package:panely/components/sidebar/sidebar_configuration.dart';
+import 'package:panely/panel_kit.dart';
 
 void main() {
   runApp(MainApp());

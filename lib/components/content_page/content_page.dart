@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:panel_kit/components/content/content_page_header.dart';
-import 'package:panel_kit/controller.dart';
+import 'package:panely/components/content_page/content_page_header.dart';
+import 'package:panely/controller.dart';
 import 'package:uuid/uuid.dart';
 
 class PanelyContentPage extends StatelessWidget {

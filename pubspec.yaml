@@ -1,7 +1,7 @@
 name: panely
 description: "Dashboard build with Flutter"
-version: 0.0.12
-homepage: "https://github.com/maciejdudek92/panel-kit/tree/main/"
+version: 0.0.15
+homepage: "https://github.com/maciejdudek92/panely/tree/main/"
 
 platforms:
   web:

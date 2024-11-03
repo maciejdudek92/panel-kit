@@ -1,8 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:panel_kit/controller.dart';
-import 'package:panel_kit/components/content/content_page.dart';
+import 'package:panely/controller.dart';
+import 'package:panely/components/content_page/content_page.dart';
 import 'package:provider/provider.dart';
 
 abstract class PanelySidebarWidget extends StatelessWidget {

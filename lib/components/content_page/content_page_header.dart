@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:panel_kit/controller.dart';
+import 'package:panely/controller.dart';
 
 class PanelyContentPageHeader extends StatelessWidget {
   List<Widget> headerButtons;

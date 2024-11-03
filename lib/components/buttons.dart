@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:panel_kit/controller.dart';
+import 'package:panely/controller.dart';
 
 enum PanelyButtonType {
   primary,
@@ -49,19 +49,12 @@ class PanelyButton extends StatelessWidget {
         onHover: onHover,
         onFocusChange: onFocusChange,
         style: ButtonStyle(
-          backgroundColor: isDisabled
-              ? WidgetStateProperty.all(theme.button.disabledButtonColor)
-              : WidgetStateProperty.all(type == PanelyButtonType.primary
-                  ? theme.button.primaryBackgroundColor
-                  : theme.button.secondaryBackgroundColor),
+          backgroundColor: isDisabled ? WidgetStateProperty.all(theme.button.disabledButtonColor) : WidgetStateProperty.all(type == PanelyButtonType.primary ? theme.button.primaryBackgroundColor : theme.button.secondaryBackgroundColor),
           splashFactory: NoSplash.splashFactory,
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7),
-              side: BorderSide(
-                  color: type == PanelyButtonType.secondary
-                      ? theme.borderColor
-                      : Colors.transparent),
+              side: BorderSide(color: type == PanelyButtonType.secondary ? theme.borderColor : Colors.transparent),
             ),
           ),
         ),
@@ -69,13 +62,7 @@ class PanelyButton extends StatelessWidget {
         autofocus: autofocus,
         clipBehavior: clipBehavior,
         iconAlignment: iconAlignment,
-        child: Text(label,
-            style: isDisabled
-                ? GetIt.I<PanelyController>()
-                    .theme
-                    .button
-                    .disabledButtonTextStyle
-                : GetIt.I<PanelyController>().theme.button.textStyle),
+        child: Text(label, style: isDisabled ? GetIt.I<PanelyController>().theme.button.disabledButtonTextStyle : GetIt.I<PanelyController>().theme.button.textStyle),
       ),
     );
   }

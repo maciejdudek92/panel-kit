@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
 // import 'package:hugeicons/hugeicons.dart';
-// import 'package:panel_kit/controller.dart';
+// import 'package:panely/controller.dart';
 // import 'package:provider/provider.dart';
 
 // class PanelyUserWidget extends StatelessWidget {

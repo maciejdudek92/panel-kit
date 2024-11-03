@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:panel_kit/components/buttons.dart';
+import 'package:panely/components/buttons.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

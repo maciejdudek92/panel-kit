@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:panel_kit/navigator.dart';
-import 'package:panel_kit/components/dialog.dart';
-import 'package:panel_kit/components/notification.dart';
-import 'package:panel_kit/theme.dart';
-import 'package:panel_kit/components/content/content_page.dart';
-import 'package:panel_kit/components/sidebar/sidebar_configuration.dart';
+import 'package:panely/navigator.dart';
+import 'package:panely/components/dialog.dart';
+import 'package:panely/components/notification.dart';
+import 'package:panely/theme.dart';
+import 'package:panely/components/content_page/content_page.dart';
+import 'package:panely/components/sidebar/sidebar_configuration.dart';
 import 'package:uuid/uuid.dart';
 import 'package:collection/collection.dart';
 

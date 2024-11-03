@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:panel_kit/components/content/content_page.dart';
+import 'package:panely/components/content_page/content_page.dart';
 
 // ignore: must_be_immutable
 class PanelyNavigator extends StatelessWidget {

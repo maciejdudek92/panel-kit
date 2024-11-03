@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:panel_kit/controller.dart';
-import 'package:panel_kit/components/sidebar/sidebar_configuration.dart';
+import 'package:panely/controller.dart';
+import 'package:panely/components/sidebar/sidebar_configuration.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
 

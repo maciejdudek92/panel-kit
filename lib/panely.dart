@@ -1,15 +1,15 @@
 // ignore_for_file: must_be_immutable
 
-library panel_kit;
+library panely;
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:panel_kit/components/sidebar/sidebar_widget.dart';
-import 'package:panel_kit/controller.dart';
-import 'package:panel_kit/theme.dart';
-import 'package:panel_kit/components/app_bar.dart';
-import 'package:panel_kit/components/sidebar/sidebar.dart';
-import 'package:panel_kit/components/sidebar/sidebar_configuration.dart';
+import 'package:panely/components/sidebar/sidebar_widget.dart';
+import 'package:panely/controller.dart';
+import 'package:panely/theme.dart';
+import 'package:panely/components/app_bar.dart';
+import 'package:panely/components/sidebar/sidebar.dart';
+import 'package:panely/components/sidebar/sidebar_configuration.dart';
 import 'package:provider/provider.dart';
 
 class Panely extends StatefulWidget {

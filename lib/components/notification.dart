@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:panel_kit/controller.dart';
+import 'package:panely/controller.dart';
 import 'package:toastification/toastification.dart';
 
 enum PanelyNotificationType {
@@ -28,8 +28,7 @@ class PanelyNotification {
 
     toastification.show(
       context: context,
-      type: ToastificationType.values
-          .firstWhere((value) => value.name == type.name),
+      type: ToastificationType.values.firstWhere((value) => value.name == type.name),
       alignment: alignment,
       title: Text(
         title,

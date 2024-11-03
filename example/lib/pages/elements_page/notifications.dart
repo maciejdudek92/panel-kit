@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:panel_kit/panel_kit.dart';
-import 'package:panel_kit/components/buttons.dart';
-import 'package:panel_kit/components/notification.dart';
+import 'package:panely/components/buttons.dart';
+import 'package:panely/components/notification.dart';
+import 'package:panely/panel_kit.dart';
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
