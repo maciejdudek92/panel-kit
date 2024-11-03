@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class PanelKitDialogTheme {
+class PanelyDialogTheme {
   final Divider divider;
   final Color backgroundColor;
   final Color borderColor;
   final TextStyle headerTextStyle;
   final TextStyle descriptionTextStyle;
 
-  const PanelKitDialogTheme({
+  const PanelyDialogTheme({
     this.backgroundColor = const Color(0xFF131314),
     this.borderColor = const Color(0xFF424242),
     this.divider = const Divider(
@@ -26,14 +26,14 @@ class PanelKitDialogTheme {
   });
 }
 
-class PanelKitNotificationTheme {
+class PanelyNotificationTheme {
   final Color backgroundColor;
   final Color closeIconColor;
   final Color borderColor;
   final TextStyle titleTextStyle;
   final TextStyle descriptionTextStyle;
 
-  const PanelKitNotificationTheme({
+  const PanelyNotificationTheme({
     this.backgroundColor = const Color(0xFF131314),
     this.borderColor = const Color(0xFF424242),
     this.closeIconColor = Colors.white,
@@ -50,7 +50,7 @@ class PanelKitNotificationTheme {
   });
 }
 
-class PanelKitMenuTheme {
+class PanelySidebarTheme {
   final Color backgroundColor;
   final Color menuItemBackgroundColor;
   final Color disabledMenuItemBackgroundColor;
@@ -59,7 +59,7 @@ class PanelKitMenuTheme {
   final TextStyle activeMenuItemTextStyle;
   final TextStyle disabledMenuItemTextStyle;
 
-  const PanelKitMenuTheme({
+  const PanelySidebarTheme({
     this.backgroundColor = const Color(0xFF131314),
     this.menuItemBackgroundColor = const Color(0xff00000000), // transparent
     this.disabledMenuItemBackgroundColor = const Color(0xFF757575),
@@ -82,25 +82,25 @@ class PanelKitMenuTheme {
   });
 }
 
-class PanelKitPageTheme {
+class PanelyContentPageTheme {
   final Color backgroundColor;
   final Color headerBackgroundColor;
   final TextStyle headerTextStyle;
-  const PanelKitPageTheme({
+  const PanelyContentPageTheme({
     this.backgroundColor = const Color(0xFF131314),
     this.headerBackgroundColor = const Color(0xFF1B1B18),
     this.headerTextStyle = const TextStyle(fontFamily: "Poppins", fontSize: 26, fontWeight: FontWeight.w500, color: Colors.white),
   });
 }
 
-class PanelKitButtonsTheme {
+class PanelyButtonsTheme {
   final TextStyle textStyle;
   final Color primaryBackgroundColor;
   final Color secondaryBackgroundColor;
   final TextStyle disabledButtonTextStyle;
   final Color disabledButtonColor;
 
-  const PanelKitButtonsTheme({
+  const PanelyButtonsTheme({
     this.primaryBackgroundColor = const Color(0xFFD32F2F),
     this.secondaryBackgroundColor = const Color(0xFF131314),
     this.disabledButtonColor = const Color(0xFF484842),
@@ -117,49 +117,49 @@ class PanelKitButtonsTheme {
   });
 }
 
-class PanelKitTheme {
-  PanelKitPageTheme page;
-  PanelKitMenuTheme menu;
-  PanelKitButtonsTheme button;
-  PanelKitDialogTheme dialog;
-  PanelKitNotificationTheme notification;
+class PanelyTheme {
+  PanelyContentPageTheme page;
+  PanelySidebarTheme menu;
+  PanelyButtonsTheme button;
+  PanelyDialogTheme dialog;
+  PanelyNotificationTheme notification;
 
   Color primaryAccentColor;
   Color backgroundColor;
   Color borderColor;
 
-  PanelKitTheme({
+  PanelyTheme({
     Color? primaryAccentColor,
     Color? backgroundColor,
     Color? borderColor,
-    PanelKitPageTheme? page,
-    PanelKitMenuTheme? menu,
-    PanelKitButtonsTheme? button,
-    PanelKitDialogTheme? dialog,
-    PanelKitNotificationTheme? notification,
+    PanelyContentPageTheme? page,
+    PanelySidebarTheme? menu,
+    PanelyButtonsTheme? button,
+    PanelyDialogTheme? dialog,
+    PanelyNotificationTheme? notification,
   })  : primaryAccentColor = primaryAccentColor ?? const Color(0xFFD32F2F),
         backgroundColor = backgroundColor ?? const Color(0xFF131314),
         borderColor = borderColor ?? const Color(0xFF424242),
         page = page ??
-            PanelKitPageTheme(
+            PanelyContentPageTheme(
               backgroundColor: backgroundColor ?? const Color(0xFF131314),
             ),
         menu = menu ??
-            PanelKitMenuTheme(
+            PanelySidebarTheme(
               backgroundColor: backgroundColor ?? const Color(0xFF131314),
             ),
         button = button ??
-            PanelKitButtonsTheme(
+            PanelyButtonsTheme(
               primaryBackgroundColor: primaryAccentColor ?? const Color(0xFFD32F2F),
               secondaryBackgroundColor: backgroundColor ?? const Color(0xFF131314),
             ),
         dialog = dialog ??
-            PanelKitDialogTheme(
+            PanelyDialogTheme(
               backgroundColor: backgroundColor ?? const Color(0xFF131314),
               borderColor: borderColor ?? const Color(0xFF424242),
             ),
         notification = notification ??
-            PanelKitNotificationTheme(
+            PanelyNotificationTheme(
               backgroundColor: backgroundColor ?? const Color(0xFF131314),
               borderColor: borderColor ?? const Color(0xFF424242),
             );

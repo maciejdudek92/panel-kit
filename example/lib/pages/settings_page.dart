@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:panel_kit/buttons.dart';
+import 'package:panel_kit/components/buttons.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -9,8 +9,8 @@ class SettingsPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PanelKitButton(
-          type: PanelKitButtonType.secondary,
+        PanelyButton(
+          type: PanelyButtonType.secondary,
           // onPressed: () => controller.setMainPage,
           label: "Show confirmation dialog",
         ),

@@ -5,12 +5,13 @@ import 'package:example/pages/empty_page.dart';
 import 'package:example/pages/navigation_page.dart';
 import 'package:example/pages/settings_page.dart';
 import 'package:flutter/material.dart';
+import 'package:panel_kit/components/content/content_page.dart';
+import 'package:panel_kit/components/content/content_page_header.dart';
+import 'package:panel_kit/components/sidebar/sidebar_widget.dart';
 import 'package:panel_kit/controller.dart';
-import 'package:panel_kit/menu.dart';
-import 'package:panel_kit/menu_item.dart';
-import 'package:panel_kit/page.dart';
-import 'package:panel_kit/page_header.dart';
 import 'package:panel_kit/panel_kit.dart';
+import 'package:panel_kit/components/sidebar/sidebar.dart';
+import 'package:panel_kit/components/sidebar/sidebar_configuration.dart';
 
 void main() {
   runApp(MainApp());
@@ -19,59 +20,62 @@ void main() {
 class MainApp extends StatelessWidget {
   MainApp({super.key});
 
-  final PanelKitController controller = PanelKitController();
+  final PanelyController controller = PanelyController();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       // theme: ThemeData.dark(),
-      home: PanelKit(
+      home: Panely(
         controller: controller,
-        panelTitle: "PanelKit - Example",
-        menu: PanelKitMenu(
+        panelTitle: "Panely - Dashboard",
+        sidebar: PanelySidebar(
+          configuration: const PanelySidebarConfiguration(
+            viewMode: PanelySidebarViewMode.desktop,
+          ),
           menuItems: [
-            PanelKitMenuButton(
+            PanelySidebarButton(
               title: "Navigation Example",
               icon: Icons.home,
-              page: PanelKitPage(
+              page: PanelyContentPage(
                 title: "Navigation Example",
                 builder: (context, controller, setState) => const NavigationPage(),
               ),
             ),
-            PanelKitMenuButton(
+            PanelySidebarButton(
               title: "Empty page",
-              page: PanelKitPage(
+              page: PanelyContentPage(
                 title: "Navigation Example",
                 builder: (context, controller, setState) => const EmptyPage(),
               ),
             ),
-            PanelKitMenuButton(
-              title: "UI Elements",
+            PanelySidebarButton(
+              title: "UI Components",
               icon: Icons.tab,
-              page: PanelKitPage.withTabs(
-                title: "UI Elements Example",
+              page: PanelyContentPage.withTabs(
+                title: "UI Components Example",
                 tabs: [
-                  PanelKitPageTab(
+                  PanelyContentPageTab(
                     title: "Buttons",
                     builder: (context, controller) => const ButtonsPage(),
                   ),
-                  PanelKitPageTab(
+                  PanelyContentPageTab(
                     title: "Notifications",
                     builder: (context, controller) => const NotificationsPage(),
                   ),
-                  PanelKitPageTab(
+                  PanelyContentPageTab(
                     title: "Dialogs",
                     builder: (context, controller) => const DialogsPage(),
                   ),
                 ],
               ),
             ),
-            PanelKitMenuSpacer(),
-            PanelKitMenuDivider(),
-            PanelKitMenuButton(
+            PanelySidebarSpacer(),
+            PanelySidebarDivider(),
+            PanelySidebarButton(
               title: "Settings",
               icon: Icons.settings,
-              page: PanelKitPage(
+              page: PanelyContentPage(
                 title: "SettingPage",
                 builder: (context, controller, setState) => const SettingsPage(),
               ),

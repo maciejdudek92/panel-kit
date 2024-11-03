@@ -4,61 +4,64 @@ library panel_kit;
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:panel_kit/app_bar.dart';
+import 'package:panel_kit/components/sidebar/sidebar_widget.dart';
 import 'package:panel_kit/controller.dart';
-import 'package:panel_kit/menu.dart';
-import 'package:panel_kit/menu_item.dart';
 import 'package:panel_kit/theme.dart';
+import 'package:panel_kit/components/app_bar.dart';
+import 'package:panel_kit/components/sidebar/sidebar.dart';
+import 'package:panel_kit/components/sidebar/sidebar_configuration.dart';
 import 'package:provider/provider.dart';
 
-class PanelKit extends StatefulWidget {
+class Panely extends StatefulWidget {
   final String panelTitle;
-  final PanelKitMenu menu;
-  final PanelKitController controller;
-  final PanelKitTheme theme;
-  PanelKitAppBar appBar;
+  final PanelySidebar sidebar;
+  final PanelyController controller;
+  final PanelyTheme theme;
+  PanelyAppBar appBar;
 
-  PanelKit({
+  Panely({
     super.key,
     required this.controller,
-    required this.menu,
+    required this.sidebar,
     required this.panelTitle,
-    PanelKitTheme? theme,
-    PanelKitAppBar? appBar,
-  })  : theme = theme ?? PanelKitTheme(),
-        appBar = appBar ?? const PanelKitAppBar();
+    PanelyTheme? theme,
+    PanelyAppBar? appBar,
+  })  : theme = theme ?? PanelyTheme(),
+        appBar = appBar ?? const PanelyAppBar();
 
-  static _PanelKitState of(BuildContext context) {
-    final _PanelKitState? result = context.findAncestorStateOfType<_PanelKitState>();
+  static _PanelyState of(BuildContext context) {
+    final _PanelyState? result = context.findAncestorStateOfType<_PanelyState>();
     if (result != null) {
       return result;
     }
     throw FlutterError.fromParts(<DiagnosticsNode>[
       ErrorSummary(
-        'PanelKit.of() called with a context that does not contain a PanelKit.',
+        'Panely.of() called with a context that does not contain a Panely.',
       ),
       context.describeElement('The context used was'),
     ]);
   }
 
   @override
-  State<PanelKit> createState() => _PanelKitState();
+  State<Panely> createState() => _PanelyState();
 }
 
-class _PanelKitState extends State<PanelKit> {
-  final controller = GetIt.I<PanelKitController>();
+class _PanelyState extends State<Panely> {
+  final controller = GetIt.I<PanelyController>();
   late final Widget _navigatorBuilder;
 
   @override
   void initState() {
-    if (widget.menu.menuItems.isEmpty) throw Exception("Menu items length must be greater than 0");
-    if (widget.menu.menuItems.first.runtimeType != PanelKitMenuButton) throw Exception("First item in menu items must have type of PanelKitMenuButton");
+    if (widget.sidebar.menuItems.isEmpty) throw Exception("Menu items length must be greater than 0");
+    if (widget.sidebar.menuItems.first.runtimeType != PanelySidebarButton) throw Exception("First item in menu items must have type of PanelySidebarButton");
+
     controller.init(
       context,
+      sidebarConfiguration: widget.sidebar.configuration,
       panelTitle: widget.panelTitle,
       theme: widget.theme,
-      startPage: (widget.menu.menuItems.first as PanelKitMenuButton).page,
-      pageTitle: (widget.menu.menuItems.first as PanelKitMenuButton).title,
+      startPage: (widget.sidebar.menuItems.first as PanelySidebarButton).page,
+      pageTitle: (widget.sidebar.menuItems.first as PanelySidebarButton).title,
     );
     _navigatorBuilder = controller.navigatorBuilder(context);
     super.initState();
@@ -72,35 +75,40 @@ class _PanelKitState extends State<PanelKit> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<PanelKitController>.value(
+    return ChangeNotifierProvider<PanelyController>.value(
       value: controller,
       builder: (context, child) {
-        double size = MediaQuery.of(context).size.width;
+        PanelySidebar? sidebar() {
+          switch (controller.sidebarConfiguration.getCurrentView(context)) {
+            case PanelySidebarViewMode.mobile:
+              return widget.sidebar;
+            default:
+              return null;
+          }
+        }
+
+        Widget body() {
+          if (controller.sidebarConfiguration.getCurrentView(context) == PanelySidebarViewMode.mobile) return _navigatorBuilder;
+          return Row(
+            children: [
+              widget.sidebar,
+              Expanded(
+                child: _navigatorBuilder,
+              )
+            ],
+          );
+        }
 
         return Theme(
           data: ThemeData.dark(),
           child: Scaffold(
             backgroundColor: controller.theme.backgroundColor,
             appBar: widget.appBar,
-            drawer: size <= 1024 ? widget.menu : null,
+            drawer: sidebar(),
             body: RestorationScope(
               restorationId: controller.navigationRestorationScopeId,
               child: Builder(
-                builder: (context) {
-                  switch (MediaQuery.of(context).size.width) {
-                    case <= 1024:
-                      return _navigatorBuilder;
-                    default:
-                      return Row(
-                        children: [
-                          widget.menu,
-                          Expanded(
-                            child: _navigatorBuilder,
-                          )
-                        ],
-                      );
-                  }
-                },
+                builder: (context) => body(),
               ),
             ),
           ),

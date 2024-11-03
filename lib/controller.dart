@@ -1,55 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:panel_kit/dialog.dart';
 import 'package:panel_kit/navigator.dart';
-import 'package:panel_kit/notification.dart';
-import 'package:panel_kit/page.dart';
+import 'package:panel_kit/components/dialog.dart';
+import 'package:panel_kit/components/notification.dart';
 import 'package:panel_kit/theme.dart';
+import 'package:panel_kit/components/content/content_page.dart';
+import 'package:panel_kit/components/sidebar/sidebar_configuration.dart';
 import 'package:uuid/uuid.dart';
 import 'package:collection/collection.dart';
 
-class PanelKitController with ChangeNotifier {
-  PanelKitController() {
-    GetIt.I.registerSingleton<PanelKitController>(this);
+class PanelyController with ChangeNotifier {
+  PanelyController() {
+    GetIt.I.registerSingleton<PanelyController>(this);
     navigationRestorationScopeId = const Uuid().v4();
   }
   late final String navigationRestorationScopeId;
 
-  late PanelKitNavigator _navigator;
+  late PanelyNavigator _navigator;
 
   late String _panelTitle;
   String get panelTitle => _panelTitle;
 
-  late PanelKitTheme _theme;
-  late PanelKitNotification _notification;
-  late PanelKitDialog _dialog;
-  PanelKitTheme get theme => _theme;
+  late PanelyTheme _theme;
+  late PanelyNotification _notification;
+  late PanelyDialog _dialog;
+  late PanelySidebarConfiguration _sidebarConfiguration;
+  PanelySidebarConfiguration get sidebarConfiguration => _sidebarConfiguration;
+  PanelyTheme get theme => _theme;
 
-  bool isPageActive(PanelKitPage page) => _navigator.isPageActive(page);
+  bool isPageActive(PanelyContentPage page) => _navigator.isPageActive(page);
   Widget navigatorBuilder(context) => _navigator.build(context);
 
   init(
     BuildContext context, {
+    required PanelySidebarConfiguration sidebarConfiguration,
     required String panelTitle,
-    required PanelKitTheme theme,
-    required PanelKitPage startPage,
+    required PanelyTheme theme,
+    required PanelyContentPage startPage,
     required String pageTitle,
   }) {
     _theme = theme;
-    _notification = PanelKitNotification(context: context);
-    _dialog = PanelKitDialog(context: context);
+    _notification = PanelyNotification(context: context);
+    _dialog = PanelyDialog(context: context);
     _panelTitle = panelTitle;
-    _navigator = PanelKitNavigator(
+    _sidebarConfiguration = sidebarConfiguration;
+    _navigator = PanelyNavigator(
       restorationScopeId: navigationRestorationScopeId,
       startPage: startPage,
     );
     notifyListeners();
   }
 
-  void showNotification({required PanelKitNotificationType type, required String title, String? description, autoCloseDuration = const Duration(seconds: 5)}) => _notification.show(type: type, title: title, description: description, autoCloseDuration: autoCloseDuration);
+  void showNotification({required PanelyNotificationType type, required String title, String? description, autoCloseDuration = const Duration(seconds: 5)}) => _notification.show(type: type, title: title, description: description, autoCloseDuration: autoCloseDuration);
 
-  void showDialg(PanelKitDialogType type) {
-    if (type == PanelKitDialogType.custom) {
+  void showDialg(PanelyDialogType type) {
+    if (type == PanelyDialogType.custom) {
       _dialog.showCustom(
         title: "aaaa",
         child: const SizedBox(
@@ -58,7 +63,7 @@ class PanelKitController with ChangeNotifier {
         ),
       );
     }
-    if (type == PanelKitDialogType.confirmation) {
+    if (type == PanelyDialogType.confirmation) {
       _dialog.showConfirmation(
         title: "aaaa",
         description: "aaaa",
@@ -91,12 +96,12 @@ class PanelKitController with ChangeNotifier {
         }),
       ];
 
-  void navigateTo(PanelKitPage page) {
+  void navigateTo(PanelyContentPage page) {
     _navigator.navigateTo(page: page);
     notifyListeners();
   }
 
-  void setNewRoute(PanelKitPage page) {
+  void setNewRoute(PanelyContentPage page) {
     _navigator.setNewRoute(page);
     notifyListeners();
   }

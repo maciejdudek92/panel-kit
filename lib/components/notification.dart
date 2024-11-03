@@ -3,28 +3,28 @@ import 'package:get_it/get_it.dart';
 import 'package:panel_kit/controller.dart';
 import 'package:toastification/toastification.dart';
 
-enum PanelKitNotificationType {
+enum PanelyNotificationType {
   info,
   warning,
   success,
   error,
 }
 
-class PanelKitNotification {
+class PanelyNotification {
   BuildContext context;
 
-  PanelKitNotification({
+  PanelyNotification({
     required this.context,
   });
 
   void show({
-    required PanelKitNotificationType type,
+    required PanelyNotificationType type,
     required String title,
     String? description,
     autoCloseDuration = const Duration(seconds: 5),
     AlignmentGeometry? alignment,
   }) {
-    final theme = GetIt.I<PanelKitController>().theme;
+    final theme = GetIt.I<PanelyController>().theme;
 
     toastification.show(
       context: context,

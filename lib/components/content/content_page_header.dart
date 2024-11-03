@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:panel_kit/controller.dart';
 
-class PanelKitPageHeader extends StatelessWidget {
+class PanelyContentPageHeader extends StatelessWidget {
   List<Widget> headerButtons;
   final String title;
-  final controller = GetIt.I<PanelKitController>();
-  PanelKitPageHeader({super.key, required this.title, this.headerButtons = const []});
+  final controller = GetIt.I<PanelyController>();
+  PanelyContentPageHeader({super.key, required this.title, this.headerButtons = const []});
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +34,18 @@ class PanelKitPageHeader extends StatelessWidget {
   }
 }
 
-class PanelKitPageTab {
+class PanelyContentPageTab {
   String title;
-  final Widget Function(BuildContext context, PanelKitController controller) builder;
-  PanelKitPageTab({required this.title, required this.builder});
+  final Widget Function(BuildContext context, PanelyController controller) builder;
+  PanelyContentPageTab({required this.title, required this.builder});
 }
 
-class PanelKitPageHeaderWithTabs extends StatelessWidget {
+class PanelyContentPageHeaderWithTabs extends StatelessWidget {
   final String title;
-  final List<PanelKitPageTab> tabs;
+  final List<PanelyContentPageTab> tabs;
   double? tabBarSize;
-  PanelKitPageHeaderWithTabs({super.key, required this.title, required this.tabs});
-  final controller = GetIt.I<PanelKitController>();
+  PanelyContentPageHeaderWithTabs({super.key, required this.title, required this.tabs});
+  final controller = GetIt.I<PanelyController>();
 
   @override
   Widget build(BuildContext context) {

@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:panel_kit/buttons.dart';
-import 'package:panel_kit/page.dart';
+import 'package:panel_kit/components/content/content_page.dart';
 import 'package:panel_kit/panel_kit.dart';
+import 'package:panel_kit/components/buttons.dart';
 
 class NavigationPage extends StatelessWidget {
   const NavigationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = PanelKit.of(context).controller;
+    final controller = Panely.of(context).controller;
 
     return Center(
-      child: PanelKitButton(
-        type: PanelKitButtonType.secondary,
+      child: PanelyButton(
+        type: PanelyButtonType.secondary,
         onPressed: () => controller.navigateTo(
-          PanelKitPage(
+          PanelyContentPage(
             title: "Next(1) Page Example",
             builder: (context, controller, setState) => Center(
-              child: PanelKitButton(
-                type: PanelKitButtonType.secondary,
+              child: PanelyButton(
+                type: PanelyButtonType.secondary,
                 onPressed: () => controller.navigateTo(
-                  PanelKitPage(
+                  PanelyContentPage(
                     title: "Next(2) Page Example",
                     builder: (context, controller, setState) => Center(
-                      child: PanelKitButton(
-                        type: PanelKitButtonType.secondary,
+                      child: PanelyButton(
+                        type: PanelyButtonType.secondary,
                         onPressed: () => controller.navigateTo(
-                          PanelKitPage(
+                          PanelyContentPage(
                             title: "Next(3) Page Example",
                             builder: (context, controller, setState) => const Center(
                               child: Text(

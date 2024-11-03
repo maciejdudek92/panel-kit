@@ -2,22 +2,28 @@
 
 import 'package:flutter/material.dart';
 import 'package:panel_kit/controller.dart';
-import 'package:panel_kit/page.dart';
+import 'package:panel_kit/components/content/content_page.dart';
 import 'package:provider/provider.dart';
 
-abstract class PanelKitMenuItem extends StatelessWidget {}
+abstract class PanelySidebarWidget extends StatelessWidget {
+  const PanelySidebarWidget({super.key});
+}
 
-class PanelKitMenuSpacer extends PanelKitMenuItem {
+class PanelySidebarSpacer extends PanelySidebarWidget {
+  const PanelySidebarSpacer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const Spacer();
   }
 }
 
-class PanelKitMenuDivider extends PanelKitMenuItem {
+class PanelySidebarDivider extends PanelySidebarWidget {
+  const PanelySidebarDivider({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final controller = context.watch<PanelKitController>();
+    final controller = context.watch<PanelyController>();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Divider(height: 1, color: controller.theme.borderColor),
@@ -25,14 +31,15 @@ class PanelKitMenuDivider extends PanelKitMenuItem {
   }
 }
 
-class PanelKitMenuButton extends PanelKitMenuItem {
+class PanelySidebarButton extends PanelySidebarWidget {
   final String title;
   final IconData? icon;
-  final PanelKitPage page;
+  final PanelyContentPage page;
   final bool isDisabled;
   final EdgeInsets padding;
 
-  PanelKitMenuButton({
+  const PanelySidebarButton({
+    super.key,
     this.icon,
     required this.title,
     required this.page,
@@ -42,7 +49,7 @@ class PanelKitMenuButton extends PanelKitMenuItem {
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.watch<PanelKitController>();
+    final controller = context.watch<PanelyController>();
 
     bool isSelected = controller.isPageActive(page);
 

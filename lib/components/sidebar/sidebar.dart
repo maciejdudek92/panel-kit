@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:panel_kit/components/sidebar/sidebar_widget.dart';
 import 'package:panel_kit/controller.dart';
-import 'package:panel_kit/menu_item.dart';
+import 'package:panel_kit/components/sidebar/sidebar_configuration.dart';
 
-class PanelKitMenu extends StatelessWidget {
-  final List<PanelKitMenuItem> menuItems;
+class PanelySidebar extends StatelessWidget {
+  final PanelySidebarConfiguration configuration;
+  final List<PanelySidebarWidget> menuItems;
   final double width;
-  PanelKitMenu({
+  PanelySidebar({
     super.key,
     required this.menuItems,
+    this.configuration = const PanelySidebarConfiguration(),
     this.width = 200,
   });
 
-  final controller = GetIt.I<PanelKitController>();
+  final controller = GetIt.I<PanelyController>();
 
   @override
   Widget build(BuildContext context) {

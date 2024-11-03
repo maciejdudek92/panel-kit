@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:panel_kit/buttons.dart';
+import 'package:panel_kit/components/buttons.dart';
 
 class ButtonsPage extends StatelessWidget {
   const ButtonsPage({super.key});
@@ -9,19 +9,19 @@ class ButtonsPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PanelKitButton(
-          type: PanelKitButtonType.primary,
+        PanelyButton(
+          type: PanelyButtonType.primary,
           onPressed: () {},
           label: "Primary",
         ),
         const SizedBox(height: 10),
-        PanelKitButton(
-          type: PanelKitButtonType.secondary,
+        PanelyButton(
+          type: PanelyButtonType.secondary,
           onPressed: () {},
           label: "Secondary",
         ),
         const SizedBox(height: 10),
-        PanelKitButton(
+        PanelyButton(
           onPressed: null,
           label: "Disabled",
         ),

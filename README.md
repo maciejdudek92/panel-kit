@@ -1,4 +1,4 @@
-# PanelKit - Dasboard for Flutter
+# Panely - Dasboard for Flutter
 
 ## Features
 

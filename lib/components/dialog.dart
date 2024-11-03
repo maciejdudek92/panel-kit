@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:panel_kit/buttons.dart';
 import 'package:panel_kit/controller.dart';
+import 'package:panel_kit/components/buttons.dart';
 
-enum PanelKitDialogType {
+enum PanelyDialogType {
   custom,
   info,
   confirmation;
 }
 
-class PanelKitDialog {
+class PanelyDialog {
   BuildContext context;
 
-  PanelKitDialog({
+  PanelyDialog({
     required this.context,
   });
 
   Future<T?> showConfirmation<T>({
     required String title,
     required String description,
-    List<PanelKitButton>? actions,
+    List<PanelyButton>? actions,
     Size? size,
   }) {
-    final theme = GetIt.I<PanelKitController>().theme;
+    final theme = GetIt.I<PanelyController>().theme;
     return showDialog<T>(
       context: context,
       builder: (BuildContext context) {
@@ -68,8 +68,8 @@ class PanelKitDialog {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: actions ??
                             [
-                              PanelKitButton(
-                                type: PanelKitButtonType.secondary,
+                              PanelyButton(
+                                type: PanelyButtonType.secondary,
                                 label: "Close",
                                 onPressed: () => Navigator.of(context).pop(),
                               ),
@@ -89,10 +89,10 @@ class PanelKitDialog {
   Future<T?> showCustom<T>({
     required String title,
     required Widget child,
-    List<PanelKitButton>? actions,
+    List<PanelyButton>? actions,
     Size? size,
   }) {
-    final theme = GetIt.I<PanelKitController>().theme;
+    final theme = GetIt.I<PanelyController>().theme;
     return showDialog<T>(
       context: context,
       builder: (BuildContext context) {
@@ -136,8 +136,8 @@ class PanelKitDialog {
                         mainAxisSize: MainAxisSize.min,
                         children: actions ??
                             [
-                              PanelKitButton(
-                                type: PanelKitButtonType.secondary,
+                              PanelyButton(
+                                type: PanelyButtonType.secondary,
                                 label: "Close",
                                 onPressed: () => Navigator.of(context).pop(),
                               ),

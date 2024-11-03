@@ -3,16 +3,16 @@
 // import 'package:panel_kit/controller.dart';
 // import 'package:provider/provider.dart';
 
-// class PanelKitUserWidget extends StatelessWidget {
+// class PanelyUserWidget extends StatelessWidget {
 //   final String name;
 //   final String description;
 //   final NetworkImage? image;
 //   final VoidCallback onLogout;
-//   const PanelKitUserWidget({super.key, required this.name, required this.description, this.image, required this.onLogout});
+//   const PanelyUserWidget({super.key, required this.name, required this.description, this.image, required this.onLogout});
 
 //   @override
 //   Widget build(BuildContext context) {
-//     final controller = context.read<PanelKitController>();
+//     final controller = context.read<PanelyController>();
 
 //     Widget logoutButton = IconButton(
 //       onPressed: onLogout,

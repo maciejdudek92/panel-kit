@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:panel_kit/controller.dart';
 
-enum PanelKitButtonType {
+enum PanelyButtonType {
   primary,
   secondary;
 }
 
 // ignore: must_be_immutable
-class PanelKitButton extends StatelessWidget {
-  PanelKitButtonType type;
+class PanelyButton extends StatelessWidget {
+  PanelyButtonType type;
   String label;
   final VoidCallback? onPressed;
   final VoidCallback? onLongPress;
@@ -21,9 +21,9 @@ class PanelKitButton extends StatelessWidget {
   final Widget? child;
   final IconAlignment iconAlignment;
 
-  PanelKitButton({
+  PanelyButton({
     super.key,
-    this.type = PanelKitButtonType.primary,
+    this.type = PanelyButtonType.primary,
     required this.label,
     this.onPressed,
     this.onLongPress,
@@ -38,7 +38,7 @@ class PanelKitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = GetIt.I<PanelKitController>().theme;
+    final theme = GetIt.I<PanelyController>().theme;
     bool isDisabled = onPressed == null && onLongPress == null;
 
     return SizedBox(
@@ -51,7 +51,7 @@ class PanelKitButton extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: isDisabled
               ? WidgetStateProperty.all(theme.button.disabledButtonColor)
-              : WidgetStateProperty.all(type == PanelKitButtonType.primary
+              : WidgetStateProperty.all(type == PanelyButtonType.primary
                   ? theme.button.primaryBackgroundColor
                   : theme.button.secondaryBackgroundColor),
           splashFactory: NoSplash.splashFactory,
@@ -59,7 +59,7 @@ class PanelKitButton extends StatelessWidget {
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7),
               side: BorderSide(
-                  color: type == PanelKitButtonType.secondary
+                  color: type == PanelyButtonType.secondary
                       ? theme.borderColor
                       : Colors.transparent),
             ),
@@ -71,11 +71,11 @@ class PanelKitButton extends StatelessWidget {
         iconAlignment: iconAlignment,
         child: Text(label,
             style: isDisabled
-                ? GetIt.I<PanelKitController>()
+                ? GetIt.I<PanelyController>()
                     .theme
                     .button
                     .disabledButtonTextStyle
-                : GetIt.I<PanelKitController>().theme.button.textStyle),
+                : GetIt.I<PanelyController>().theme.button.textStyle),
       ),
     );
   }
