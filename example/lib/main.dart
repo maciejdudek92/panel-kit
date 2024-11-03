@@ -11,7 +11,7 @@ import 'package:panely/components/sidebar/sidebar_widget.dart';
 import 'package:panely/controller.dart';
 import 'package:panely/components/sidebar/sidebar.dart';
 import 'package:panely/components/sidebar/sidebar_configuration.dart';
-import 'package:panely/panel_kit.dart';
+import 'package:panely/panely.dart';
 
 void main() {
   runApp(MainApp());

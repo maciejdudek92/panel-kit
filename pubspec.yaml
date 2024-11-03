@@ -1,6 +1,6 @@
 name: panely
 description: "Dashboard build with Flutter"
-version: 0.0.15
+version: 0.0.16
 homepage: "https://github.com/maciejdudek92/panely/tree/main/"
 
 platforms:
@@ -20,7 +20,6 @@ dependencies:
   flutter_breadcrumb: ^1.0.1
   uuid: ^4.5.1
   collection: ^1.18.0
-  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:

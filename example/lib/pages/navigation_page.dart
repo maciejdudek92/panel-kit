@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:panely/components/buttons.dart';
 import 'package:panely/components/content_page/content_page.dart';
-import 'package:panely/panel_kit.dart';
+import 'package:panely/panely.dart';
 
 class NavigationPage extends StatelessWidget {
   const NavigationPage({super.key});

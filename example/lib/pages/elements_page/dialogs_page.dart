@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:panely/panel_kit.dart';
 import 'package:panely/components/buttons.dart';
 import 'package:panely/components/dialog.dart';
+import 'package:panely/panely.dart';
 
 class DialogsPage extends StatelessWidget {
   const DialogsPage({super.key});
